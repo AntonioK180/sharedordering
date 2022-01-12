@@ -1,13 +1,13 @@
-package sharedordering;
+package serverapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SharedorderingApplication {
+public class ServerAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SharedorderingApplication.class, args);
+		SpringApplication.run(ServerAppApplication.class, args);
 	}
 
 }

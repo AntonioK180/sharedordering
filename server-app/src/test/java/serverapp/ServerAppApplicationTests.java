@@ -1,10 +1,10 @@
-package sharedordering;
+package serverapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SharedorderingApplicationTests {
+class ServerAppApplicationTests {
 
 	@Test
 	void contextLoads() {

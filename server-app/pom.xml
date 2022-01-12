@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>sharedordering</artifactId>
+	<artifactId>server-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sharedordering</name>
-	<description>A web application, which connects users who want to shop from the same online stores.</description>
+	<name>server-app</name>
+	<description>The server application for the sharedordering.com website.</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -25,7 +25,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
