@@ -1,0 +1,1 @@
+1) http://ooatool.com/docs/OOA96.pdf - in a relation to: "Why having loops in a relational DB is bad"

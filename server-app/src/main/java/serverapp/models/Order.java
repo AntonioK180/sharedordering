@@ -2,6 +2,7 @@ package serverapp.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -13,15 +14,65 @@ public class Order {
 
     private String storeName;
 
-    private int peopleParticipating = 1;
-
     private Date creationDate;
 
     private Date orderDate;
 
-    private double priceSum;
-
     @Size(max = 100)
     private String trackingNumber;
+
+//    private List<User> users;
+
+//    private List<Product> products;
+
+    public Order() {}
+
+    public Order(Long id, String storeName, Date creationDate, Date orderDate, String trackingNumber) {
+        this.id = id;
+        this.storeName = storeName;
+        this.creationDate = creationDate;
+        this.orderDate = orderDate;
+        this.trackingNumber = trackingNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
 
 }
