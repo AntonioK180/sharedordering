@@ -19,4 +19,45 @@ public class Product {
     double price;
 
     Boolean paid;
+
+    public Product() {}
+
+    public Product(Long id, String url, double price, Boolean paid) {
+        this.id = id;
+        this.url = url;
+        this.price = price;
+        this.paid = paid;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
 }
