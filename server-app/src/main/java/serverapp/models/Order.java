@@ -23,7 +23,8 @@ public class Order {
 
 //    private List<User> users;
 
-//    private List<Product> products;
+    @OneToMany(mappedBy="order")
+    private List<Product> products;
 
     public Order() {}
 

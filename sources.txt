@@ -1,1 +1,2 @@
 1) http://ooatool.com/docs/OOA96.pdf - in a relation to: "Why having loops in a relational DB is bad"
+2) https://www.baeldung.com/hibernate-one-to-many - in a relation to: "JPA Hibernate One to Many connection"
