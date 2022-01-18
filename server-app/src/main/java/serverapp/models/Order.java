@@ -24,6 +24,7 @@ public class Order {
     @OneToMany(mappedBy="order")
     private List<Product> products;
 
+
     public Order() {}
 
     public Order(Long id, String storeName, Date creationDate, Date orderDate, String trackingNumber) {
