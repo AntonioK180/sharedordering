@@ -1,1 +1,2 @@
 1) http://ooatool.com/docs/OOA96.pdf - in a relation to: "Why having loops in a relational DB is bad"
+2) https://angular.io/guide/http - in a relation to: "Using class VS an interface for consuming API data"
