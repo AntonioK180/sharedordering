@@ -2,6 +2,7 @@ package serverapp.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,4 +22,7 @@ public class User {
     @Size(max = 120)
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Product> userProducts;
 }

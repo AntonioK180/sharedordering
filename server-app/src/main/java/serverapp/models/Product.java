@@ -1,9 +1,6 @@
 package serverapp.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,6 +16,14 @@ public class Product {
     double price;
 
     Boolean paid;
+
+    @ManyToOne
+    @JoinColumn(name="order_id", nullable = false)
+    Order order;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    User user;
 
     public Product() {}
 

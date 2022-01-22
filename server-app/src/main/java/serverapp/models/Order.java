@@ -21,7 +21,9 @@ public class Order {
     @Size(max = 100)
     private String trackingNumber;
 
-//    private List<Product> products;
+    @OneToMany(mappedBy="order")
+    private List<Product> products;
+
 
     public Order() {}
 
