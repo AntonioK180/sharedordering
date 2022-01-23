@@ -10,16 +10,15 @@
 					<div class="row">
 						<div class="col">
 							<mat-form-field class="full-width">
-								<input [formControlName]="i" matInput placeholder="Product URL"
-									formControlName="products">
+								<input [formControlName]="i" matInput placeholder="Product URL" formControlName="products">
+								<button mat-mini-fab (click)="removeProduct(i)" class="remove-product">-</button>
 							</mat-form-field>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<button mat-button type="button" (click)="addProduct()" class="btn btn-primary">+ Add
-							More</button>
+						<button mat-button type="button" (click)="addProduct()" class="btn btn-primary">+ Add More</button>
 					</div>
 				</div>
 				<div class="row">

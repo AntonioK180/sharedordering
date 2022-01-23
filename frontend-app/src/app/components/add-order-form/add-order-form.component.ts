@@ -12,8 +12,6 @@ export class AddOrderFormComponent {
 		store: ['amazon', Validators.required]
 	});
 
-	hasUnitNummeber = false;
-
 	constructor(private fb: FormBuilder) { }
 
 	onSubmit(): void {
@@ -29,5 +27,8 @@ export class AddOrderFormComponent {
 		this.products().push(new FormControl(null, Validators.required));
 	}
 
+	removeProduct(index: number) {
+		this.products().removeAt(index);
+	}
 
 }

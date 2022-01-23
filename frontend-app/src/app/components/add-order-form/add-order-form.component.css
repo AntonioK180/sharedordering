@@ -3,6 +3,11 @@ app-available-stores {
   margin: 20px auto;
 }
 
+.remove-product {
+  float: right;
+  background-color: rgb(182, 75, 75);
+}
+
 .wrapper-box {
   display: flex;
 }
