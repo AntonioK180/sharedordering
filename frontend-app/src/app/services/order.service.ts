@@ -18,11 +18,11 @@ export class OrderService {
 	}
 
 	public addOrder(order: Order): Observable<Order> {
+		console.log(ORDERS_API);
 		return this.http.post<Order>(ORDERS_API, order);
 	}
 
 	public updateOrder(order: Order): Observable<Order> {
-		console.log("TEST TEST: " + ORDERS_API);
 		return this.http.put<Order>(ORDERS_API, order);
 	}
 

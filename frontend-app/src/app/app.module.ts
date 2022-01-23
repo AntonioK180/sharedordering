@@ -21,6 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AvailableStoresComponent } from './components/available-stores/available-stores.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCardModule,
     MatGridListModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
