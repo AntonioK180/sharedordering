@@ -9,7 +9,6 @@ app-available-stores {
 
 form {
   width: 70%;
-  margin-left: 1%;
 }
 
 .full-width {
@@ -18,7 +17,7 @@ form {
 
 .ordering-card {
   min-width: 120px;
-  margin: 20px auto;
+  margin: 20px auto auto 2%;
 }
 
 .mat-radio-button {
