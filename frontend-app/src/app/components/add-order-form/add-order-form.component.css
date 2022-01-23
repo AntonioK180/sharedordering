@@ -3,11 +3,16 @@ app-available-stores {
   margin: 20px auto;
 }
 
+.shorter-input {
+  width: 90%;
+}
+
 .remove-product {
   float: right;
   background-color: rgb(182, 75, 75);
   min-width: 0;
   line-height: 15px;
+  border-radius: 10px;
 }
 
 .wrapper-box {

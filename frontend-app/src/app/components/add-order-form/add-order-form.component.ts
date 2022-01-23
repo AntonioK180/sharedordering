@@ -7,7 +7,7 @@ import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms'
 	styleUrls: ['./add-order-form.component.css']
 })
 export class AddOrderFormComponent {
-	moreThanOne = false;
+	moreThanOneInputs = false;
 	orderForm = this.fb.group({
 		products: this.fb.array([new FormControl(null, Validators.required)]),
 		store: ['amazon', Validators.required]
@@ -17,7 +17,7 @@ export class AddOrderFormComponent {
 
 	products(): FormArray {
 		let productsArray = this.orderForm.get('products') as FormArray;  
-		this.moreThanOne = (productsArray.length > 1);
+		this.moreThanOneInputs = (productsArray.length > 1);
 		return productsArray;
 	}
 
@@ -30,8 +30,7 @@ export class AddOrderFormComponent {
 	}
 
 	onSubmit(): void {
-		console.log(this.orderForm);
-		console.log('FIRST INPUT:' + JSON.stringify(this.orderForm.value));
+		alert("Thank you!");
 	}
 
 }

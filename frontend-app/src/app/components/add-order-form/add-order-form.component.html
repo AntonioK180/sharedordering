@@ -10,8 +10,8 @@
 					<div class="row">
 						<div class="col">
 							<mat-form-field class="full-width">
-								<input [formControlName]="i" matInput placeholder="Product URL" formControlName="products">
-								<button mat-button *ngIf="moreThanOne" (click)="removeProduct(i)" class="remove-product">-</button>
+								<input [formControlName]="i" matInput placeholder="Product URL" formControlName="products" class="shorter-input">
+								<button mat-button *ngIf="moreThanOneInputs" (click)="removeProduct(i)" class="remove-product">-</button>
 							</mat-form-field>
 						</div>
 					</div>
@@ -37,5 +37,4 @@
 		</mat-card>
 	</form>
 	<app-available-stores></app-available-stores>
-
 </div>
