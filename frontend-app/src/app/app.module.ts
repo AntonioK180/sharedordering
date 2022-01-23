@@ -17,8 +17,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormForComparisonComponent } from './components/form-for-comparison/form-for-comparison.component';
+import { AvailableStoresComponent } from './components/available-stores/available-stores.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,7 @@ import { FormForComparisonComponent } from './components/form-for-comparison/for
     OrderItemComponent,
     AddOrderFormComponent,
     NavbarComponent,
-    FormForComparisonComponent
+    AvailableStoresComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,9 @@ import { FormForComparisonComponent } from './components/form-for-comparison/for
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
-    ReactiveFormsModule
+    MatGridListModule,
+    ReactiveFormsModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

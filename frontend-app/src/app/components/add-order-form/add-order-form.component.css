@@ -1,3 +1,12 @@
+app-available-stores {
+  width: 27.5%;
+  margin: 20px auto;
+}
+
+.wrapper-box {
+  display: flex;
+}
+
 form {
   width: 70%;
   margin-left: 1%;
