@@ -11,7 +11,7 @@
 						<div class="col">
 							<mat-form-field class="full-width">
 								<input [formControlName]="i" matInput placeholder="Product URL" formControlName="products">
-								<button mat-mini-fab (click)="removeProduct(i)" class="remove-product">-</button>
+								<button mat-button *ngIf="moreThanOne" (click)="removeProduct(i)" class="remove-product">-</button>
 							</mat-form-field>
 						</div>
 					</div>
