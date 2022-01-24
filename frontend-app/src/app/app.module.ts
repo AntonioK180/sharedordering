@@ -23,6 +23,7 @@ import { AvailableStoresComponent } from './components/available-stores/availabl
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RegistrationFormComponent } from './components/registration-form/regist
     AddOrderFormComponent,
     NavbarComponent,
     AvailableStoresComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,

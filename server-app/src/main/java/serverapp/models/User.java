@@ -15,8 +15,11 @@ public class User {
     private Long id;
 
     @Size(max = 20)
-    @Column(unique = true, nullable = false)
-    private String username;
+    private String firstName;
+
+    @Size(max = 20)
+    private String lastName;
+
 
     @Size(max = 50)
     @Column(unique = true, nullable = false)
