@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AvailableStoresComponent } from './components/available-stores/available-stores.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     OrderItemComponent,
     AddOrderFormComponent,
     NavbarComponent,
-    AvailableStoresComponent
+    AvailableStoresComponent,
+    RegistrationFormComponent
   ],
   imports: [
     BrowserModule,

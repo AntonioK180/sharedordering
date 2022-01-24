@@ -2,6 +2,7 @@ package serverapp.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.Size;
 
@@ -75,4 +76,11 @@ public class Order {
         this.trackingNumber = trackingNumber;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

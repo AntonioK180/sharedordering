@@ -1,5 +1,7 @@
 package serverapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -18,12 +20,13 @@ public class Product {
     Boolean paid;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="order_id", nullable = false)
     Order order;
 
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    User user;
+//    @ManyToOne
+//    @JoinColumn(name="user_id", nullable = false)
+//    User user;
 
     public Product() {}
 
@@ -65,4 +68,20 @@ public class Product {
     public void setPaid(Boolean paid) {
         this.paid = paid;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }
