@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'sharedordering.com'
+  apiBaseUrl: 'http://sharedordering.com'
 };
