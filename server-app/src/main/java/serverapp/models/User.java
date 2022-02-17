@@ -4,7 +4,9 @@ import serverapp.models.authentication.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,10 +16,10 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @Size(max = 20)
+    @Size(max = 35)
     private String firstName;
 
-    @Size(max = 20)
+    @Size(max = 35)
     private String lastName;
 
 
@@ -35,6 +37,34 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-//    @OneToMany(mappedBy = "user")
+    public Long getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    //    @OneToMany(mappedBy = "user")
 //    private List<Product> userProducts;
 }
