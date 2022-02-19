@@ -19,6 +19,7 @@ import serverapp.security.jwt.JwtResponse;
 import serverapp.security.jwt.JwtUtils;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,7 +84,7 @@ public class AuthController {
                 userDetails.getEmail(),
                 encoder.encode(userDetails.getPassword()));
 
-        Set<String> strRoles = userDetails.getRole();
+        Set<String> strRoles = Collections.singleton("user");
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
