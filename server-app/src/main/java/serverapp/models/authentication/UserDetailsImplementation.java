@@ -1,26 +1,22 @@
 package serverapp.models.authentication;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import serverapp.models.User;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import serverapp.models.User;
 
 public class UserDetailsImplementation implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    private String firstName;
-
-    private String lastName;
+    private String username;
 
     private String email;
 
@@ -29,10 +25,10 @@ public class UserDetailsImplementation implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImplementation(Long id, String firstName, String lastName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImplementation(Long id, String username, String email, String password,
+                                     Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -45,12 +41,10 @@ public class UserDetailsImplementation implements UserDetails {
 
         return new UserDetailsImplementation(
                 user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities
-        );
+                authorities);
     }
 
     @Override
@@ -72,13 +66,8 @@ public class UserDetailsImplementation implements UserDetails {
     }
 
     @Override
-    public String getFirstName() {
-        return firstName;
-    }
-
-    @Override
-    public String getLastName() {
-        return lastName;
+    public String getUsername() {
+        return username;
     }
 
     @Override

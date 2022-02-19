@@ -1,11 +1,5 @@
 package serverapp.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import serverapp.models.User;
 import serverapp.models.authentication.ERole;
 import serverapp.models.authentication.Role;
+import serverapp.models.authentication.UserDetailsImplementation;
 import serverapp.repositories.RoleRepo;
 import serverapp.repositories.UserRepo;
 import serverapp.security.jwt.JwtResponse;
 import serverapp.security.jwt.JwtUtils;
 
+import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -43,10 +44,10 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody String username, @RequestBody String password) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(username, password));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -64,19 +65,25 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDetailsImplementation userDetails) {
+        if (userRepository.existsByUsername(userDetails.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body("Error: Username is already taken!");
         }
 
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        if (userRepository.existsByEmail(userDetails.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: Email is already in use!");
+        }
 
-        Set<String> strRoles = signUpRequest.getRole();
+        // Create new user's account
+        User user = new User(userDetails.getUsername(),
+                userDetails.getEmail(),
+                encoder.encode(userDetails.getPassword()));
+
+        Set<String> strRoles = userDetails.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -109,6 +116,6 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok("User registered successfully!");
     }
 }
