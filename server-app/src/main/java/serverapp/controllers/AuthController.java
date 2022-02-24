@@ -45,10 +45,10 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody String username, @RequestBody String password) {
+    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody User user) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password));
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -66,7 +66,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDetailsImplementation userDetails) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User userDetails) {
         if (userRepository.existsByUsername(userDetails.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -84,7 +84,7 @@ public class AuthController {
                 userDetails.getEmail(),
                 encoder.encode(userDetails.getPassword()));
 
-        Set<String> strRoles = Collections.singleton("user");
+        Set<String> strRoles = Collections.singleton("mod");
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
