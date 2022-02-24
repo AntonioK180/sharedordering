@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 	templateUrl: './add-order-form.component.html',
 	styleUrls: ['./add-order-form.component.css']
 })
-export class AddOrderFormComponent implements OnInit{
+export class AddOrderFormComponent implements OnInit {
 	public moreThanOneInputs = false;
 	public orderForm = this.fb.group({
 		products: this.fb.array([new FormControl(null, Validators.required)]),
@@ -19,13 +19,13 @@ export class AddOrderFormComponent implements OnInit{
 	});
 
 	constructor(private fb: FormBuilder, private orderService: OrderService, private productService: ProductService) { }
-	
+
 	public ngOnInit(): void {
 		console.log("Here I am!");
 	}
 
 	public products(): FormArray {
-		let productsArray = this.orderForm.get('products') as FormArray;  
+		let productsArray = this.orderForm.get('products') as FormArray;
 		this.moreThanOneInputs = (productsArray.length > 1);
 		return productsArray;
 	}

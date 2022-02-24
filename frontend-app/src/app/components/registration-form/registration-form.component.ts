@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
 	selector: 'app-registration-form',
@@ -8,15 +9,32 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class RegistrationFormComponent {
 	registrationForm = this.fb.group({
-		firstName: [null, Validators.required],
-		lastName: [null],
-		email: [null, Validators.required, Validators.email],
-		password: [null, Validators.required, Validators.minLength(6)],
+		name: [null, Validators.required],
+		username: [null, Validators.required],
+		email: [null, [Validators.required, Validators.email]],
+		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
 
-	constructor(private fb: FormBuilder) { }
+	isSuccessful = false;
+	isSignUpFailed = false;
+
+	constructor(private fb: FormBuilder, private authService: AuthService) { }
 
 	onSubmit(): void {
-		alert('Thanks!');
+		let username = this.registrationForm.value['username'];
+		let email = this.registrationForm.value['email'];
+		let password = this.registrationForm.value['password'];
+
+		this.authService.register(username, email, password).subscribe(
+			data => {
+				console.log(data);
+				this.isSuccessful = true;
+				this.isSignUpFailed = false;
+			},
+			err => {
+				console.log("Failed registration");
+				this.isSignUpFailed = true;
+			}
+		);
 	}
 }
