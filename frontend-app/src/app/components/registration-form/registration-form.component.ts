@@ -26,13 +26,13 @@ export class RegistrationFormComponent {
 		let password = this.registrationForm.value['password'];
 
 		this.authService.register(username, email, password).subscribe(
-			data => {
+			(data) => {
 				console.log(data);
 				this.isSuccessful = true;
 				this.isSignUpFailed = false;
 			},
-			err => {
-				console.log("Failed registration");
+			(err) => {
+				console.log(err.error);
 				this.isSignUpFailed = true;
 			}
 		);
