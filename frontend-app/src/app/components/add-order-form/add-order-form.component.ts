@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AddOrderFormComponent implements OnInit {
 	public moreThanOneInputs = false;
+	public errorText = "";
 	public orderForm = this.fb.group({
 		products: this.fb.array([new FormControl(null, Validators.required)]),
 		store: ['amazon', Validators.required]
@@ -52,10 +53,17 @@ export class AddOrderFormComponent implements OnInit {
 
 		this.orderService.addOrder(newOrder).subscribe(
 			(resposne: Order) => {
+				this.errorText = "";
 				console.log('You have successfully made a new order!');
 			},
 			(error: HttpErrorResponse) => {
 				console.log(error);
+
+				switch (error.status) {
+					case 401:
+						this.errorText = "You need to be logged in!";
+						break;
+				}
 			}
 		);
 	}

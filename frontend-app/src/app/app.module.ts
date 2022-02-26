@@ -24,37 +24,38 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    OrderItemComponent,
-    AddOrderFormComponent,
-    NavbarComponent,
-    AvailableStoresComponent,
-    RegistrationFormComponent,
-    LoginFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    MatGridListModule,
-    ReactiveFormsModule,
-    MatMenuModule,
-    HttpClientModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		OrderItemComponent,
+		AddOrderFormComponent,
+		NavbarComponent,
+		AvailableStoresComponent,
+		RegistrationFormComponent,
+		LoginFormComponent
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		LayoutModule,
+		MatToolbarModule,
+		MatButtonModule,
+		MatSidenavModule,
+		MatIconModule,
+		MatListModule,
+		MatInputModule,
+		MatSelectModule,
+		MatRadioModule,
+		MatCardModule,
+		MatGridListModule,
+		ReactiveFormsModule,
+		MatMenuModule,
+		HttpClientModule,
+	],
+	providers: [authInterceptorProviders],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

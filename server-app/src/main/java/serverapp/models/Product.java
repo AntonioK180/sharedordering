@@ -24,9 +24,9 @@ public class Product {
     @JoinColumn(name="order_id", nullable = false)
     Order order;
 
-//    @ManyToOne
-//    @JoinColumn(name="user_id", nullable = false)
-//    User user;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    User user;
 
     public Product() {}
 
