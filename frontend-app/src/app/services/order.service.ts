@@ -18,7 +18,6 @@ export class OrderService {
 	}
 
 	public addOrder(order: Order): Observable<Order> {
-		console.log(ORDERS_API);
 		return this.http.post<Order>(ORDERS_API, order);
 	}
 
@@ -27,6 +26,6 @@ export class OrderService {
 	}
 
 	public deleteOrder(orderId: number | undefined): Observable<void> {
-        return this.http.delete<void>(ORDERS_API + '/' + orderId);
-    }
+		return this.http.delete<void>(ORDERS_API + '/' + orderId);
+	}
 }

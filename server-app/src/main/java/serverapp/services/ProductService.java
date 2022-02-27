@@ -25,7 +25,6 @@ public class ProductService {
         return productRepo.saveAll(products);
     }
 
-
     public Product getProductById(Long id) {
         return productRepo.findProductById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product with ID: " + id + " cannot be found!"));

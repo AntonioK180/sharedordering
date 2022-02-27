@@ -40,7 +40,6 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		console.log(this.orderForm.value);
 		let productURLs = this.productService.convertArrayToProductsArray(this.orderForm.value['products']);
 		let today = new Date();
 

@@ -25,6 +25,7 @@ public class Product {
     Order order;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="user_id", nullable = false)
     User user;
 
@@ -77,11 +78,11 @@ public class Product {
         this.order = order;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
