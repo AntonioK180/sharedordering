@@ -61,7 +61,6 @@ public class AuthController {
         return new ResponseEntity<>(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles), HttpStatus.OK);
     }
 
@@ -70,18 +69,10 @@ public class AuthController {
         if (userRepository.existsByUsername(userDetails.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body("Error: Username is already taken!");
-        }
-
-        if (userRepository.existsByEmail(userDetails.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
                     .body("Error: Email is already in use!");
         }
 
-        // Create new user's account
         User user = new User(userDetails.getUsername(),
-                userDetails.getEmail(),
                 encoder.encode(userDetails.getPassword()));
 
         Set<String> strRoles = Collections.singleton("mod");

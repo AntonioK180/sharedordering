@@ -22,12 +22,8 @@ public class User {
     @Size(max = 35)
     private String lastName;
 
-    @Size(max = 35)
+    @Size(max = 80)
     private String username;
-
-    @Size(max = 50)
-    @Column(unique = true, nullable = false)
-    private String email;
 
     @Size(max = 120)
     @Column(nullable = false)
@@ -39,11 +35,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    //    @OneToMany(mappedBy = "user")
+    //    private List<Product> userProducts;
+
     public User() {}
 
-    public User(String username, String email, String password) {
+    public User(String username, String password) {
         this.username = username;
-        this.email = email;
         this.password = password;
     }
 
@@ -79,14 +77,6 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -103,6 +93,4 @@ public class User {
         this.roles = roles;
     }
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Product> userProducts;
 }

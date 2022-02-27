@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegistrationFormComponent {
 	registrationForm = this.fb.group({
 		name: [null, Validators.required],
-		username: [null, Validators.required],
 		email: [null, [Validators.required, Validators.email]],
 		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
@@ -21,11 +20,10 @@ export class RegistrationFormComponent {
 	constructor(private fb: FormBuilder, private authService: AuthService) { }
 
 	onSubmit(): void {
-		let username = this.registrationForm.value['username'];
 		let email = this.registrationForm.value['email'];
 		let password = this.registrationForm.value['password'];
 
-		this.authService.register(username, email, password).subscribe(
+		this.authService.register(email, password).subscribe(
 			(data) => {
 				console.log(data);
 				this.isSuccessful = true;

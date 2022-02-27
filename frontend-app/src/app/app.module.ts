@@ -25,6 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { ViewOrdersComponent } from './components/view-orders/view-orders.component';
+import { SingleOrderComponent } from './components/single-order/single-order.component';
 
 @NgModule({
 	declarations: [
@@ -34,7 +36,9 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
 		NavbarComponent,
 		AvailableStoresComponent,
 		RegistrationFormComponent,
-		LoginFormComponent
+		LoginFormComponent,
+  ViewOrdersComponent,
+  SingleOrderComponent
 	],
 	imports: [
 		BrowserModule,

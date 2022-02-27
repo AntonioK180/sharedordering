@@ -11,17 +11,17 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class LoginFormComponent {
 
 	loginForm = this.fb.group({
-		username: [null, Validators.required],
+		email: [null, [Validators.required, Validators.email]],
 		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
 
 	constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
 	onSubmit(): void {
-		let username = this.loginForm.value['username'];
+		let email = this.loginForm.value['email'];
 		let password = this.loginForm.value['password'];
 
-		this.authService.login(username, password).subscribe(
+		this.authService.login(email, password).subscribe(
 			(data) => {
 				this.tokenStorage.saveToken(data.accessToken);
 				this.tokenStorage.saveUser(data);

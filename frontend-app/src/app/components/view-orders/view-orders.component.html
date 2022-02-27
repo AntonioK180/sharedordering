@@ -1,0 +1,17 @@
+<div *ngFor="let order of orders" class="container py-5">
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+
+            <!-- List group-->
+            <ul class="list-group shadow">
+
+                <!-- list group item-->
+                <li class="list-group-item">
+                    <app-single-order [order]="order" (onDeleteOrder)="deleteOrder(order)"></app-single-order>
+                </li>
+            </ul>
+            <!-- End -->
+        </div>
+    </div>
+</div>
