@@ -8,30 +8,42 @@ import { AuthService } from 'src/app/services/auth.service';
 	styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent {
+	isSignUpFailed = false;
+	public errorText = "";
+
 	registrationForm = this.fb.group({
 		name: [null, Validators.required],
 		email: [null, [Validators.required, Validators.email]],
 		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
 
-	isSuccessful = false;
-	isSignUpFailed = false;
-
 	constructor(private fb: FormBuilder, private authService: AuthService) { }
 
 	onSubmit(): void {
+		if (!this.registrationForm.valid) {
+			return;
+		}
+
 		let email = this.registrationForm.value['email'];
 		let password = this.registrationForm.value['password'];
 
 		this.authService.register(email, password).subscribe(
-			(data) => {
-				console.log(data);
-				this.isSuccessful = true;
+			(response) => {
 				this.isSignUpFailed = false;
+				console.log("API answer: " + response);
 			},
 			(err) => {
-				console.log(err.error);
 				this.isSignUpFailed = true;
+				console.log(err.error);
+				switch (err.error) {
+					case "Error: rawPassword cannot be null":
+						this.errorText = "Password cannot be empty!";
+						break;
+
+					case "Error: Email is already in use!":
+						this.errorText = "This email has already been registered!";
+						break;
+				}
 			}
 		);
 	}

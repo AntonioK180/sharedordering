@@ -18,6 +18,10 @@ export class LoginFormComponent {
 	constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
 	onSubmit(): void {
+		if (!this.loginForm.valid) {
+			return;
+		}
+
 		let email = this.loginForm.value['email'];
 		let password = this.loginForm.value['password'];
 

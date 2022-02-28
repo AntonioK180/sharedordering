@@ -1,5 +1,6 @@
 package serverapp.controllers;
 
+import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,15 +66,24 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User userDetails) {
-        if (userRepository.existsByUsername(userDetails.getUsername())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User unregisteredUser) {
+
+        if (userRepository.existsByUsername(unregisteredUser.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body("Error: Email is already in use!");
         }
 
-        User user = new User(userDetails.getUsername(),
-                encoder.encode(userDetails.getPassword()));
+        User user = new User();
+
+        try {
+            user.setUsername(unregisteredUser.getUsername());
+            user.setPassword(encoder.encode(unregisteredUser.getPassword()));
+        } catch(IllegalArgumentException iae) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: " + iae.getMessage());
+        }
 
         Set<String> strRoles = Collections.singleton("mod");
         Set<Role> roles = new HashSet<>();

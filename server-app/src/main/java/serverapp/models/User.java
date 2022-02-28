@@ -3,6 +3,7 @@ package serverapp.models;
 import serverapp.models.authentication.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;

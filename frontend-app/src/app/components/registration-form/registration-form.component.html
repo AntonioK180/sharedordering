@@ -21,6 +21,9 @@
                         <mat-error *ngIf="registrationForm.controls['email'].hasError('required')">
                             Email is <strong>required</strong>
                         </mat-error>
+                        <mat-error *ngIf="registrationForm.controls['email'].hasError('email')">
+                            <strong> Invalid email </strong>
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -31,12 +34,16 @@
                         <mat-error *ngIf="registrationForm.controls['password'].hasError('required')">
                             Password is <strong>required</strong>
                         </mat-error>
+                        <mat-error *ngIf="registrationForm.controls['password'].hasError('minlength')">
+                            Password must be at least <strong>6 characters</strong>
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button color="primary" type="submit">Register</button>
+            <mat-error *ngIf="errorText.length > 0"> {{ errorText }} </mat-error>
         </mat-card-actions>
     </mat-card>
 </form>
