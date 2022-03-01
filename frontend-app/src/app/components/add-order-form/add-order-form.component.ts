@@ -5,6 +5,8 @@ import { formatDate } from '@angular/common';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SeleniumService } from 'src/app/services/selenium.service';
+import { Product } from 'src/app/interfaces/product';
 
 @Component({
 	selector: 'app-add-order-form',
@@ -19,7 +21,7 @@ export class AddOrderFormComponent implements OnInit {
 		store: ['amazon', Validators.required]
 	});
 
-	constructor(private fb: FormBuilder, private orderService: OrderService, private productService: ProductService) { }
+	constructor(private fb: FormBuilder, private orderService: OrderService, private productService: ProductService, private seleniumService: SeleniumService) { }
 
 	public ngOnInit(): void {
 		console.log("Here I am!");
@@ -52,7 +54,16 @@ export class AddOrderFormComponent implements OnInit {
 		this.orderService.addOrder(newOrder).subscribe(
 			(resposne: Order) => {
 				this.errorText = "";
-				console.log('You have successfully made a new order!');
+				console.log('You have successfully made a new order!: ' + JSON.stringify(resposne.products));
+
+				this.seleniumService.checkLinks(resposne.products).subscribe(
+					(resposne: Array<Product>) => {
+						console.log(resposne);
+					},
+					(error) => {
+						console.log(error);
+					}
+				)
 			},
 			(error: HttpErrorResponse) => {
 				console.log(error);

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from '../interfaces/product';
 
-const SELENIUM_API = environment.apiBaseUrl + '/api/v1/orders';
+const SELENIUM_API = environment.apiBaseUrl + '/api/v1/selenium';
 
 @Injectable({
 	providedIn: 'root'

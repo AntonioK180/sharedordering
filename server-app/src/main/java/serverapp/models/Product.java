@@ -48,6 +48,8 @@ public class Product {
             return domain.startsWith("www.") ? domain.substring(4) : domain;
         } catch (URISyntaxException e) {
             return "Error: Invalid URI.";
+        } catch (NullPointerException e) {
+            return "Error: Domain is null.";
         }
     }
 

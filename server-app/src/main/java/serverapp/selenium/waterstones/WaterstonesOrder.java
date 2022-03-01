@@ -13,9 +13,9 @@ public class WaterstonesOrder {
     private WaterstonesHelper waterstonesHelper;
 
     public static WebDriver driver = null;
-    private String storeName = "Waterstones";
+    private String storeName = "waterstones.com";
 
-    private String chromedriverPath = "drivers/chromedriver_98.exe";
+    private String chromedriverPath = "drivers/chromedriver.exe";
 
     public String getStoreName() {
         return storeName;
