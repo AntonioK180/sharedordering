@@ -69,9 +69,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody User unregisteredUser) {
 
         if (userRepository.existsByUsername(unregisteredUser.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Email is already in use!");
+            return new ResponseEntity<>("Error: Email is already in use!", HttpStatus.BAD_REQUEST);
         }
 
         User user = new User();
@@ -80,9 +78,7 @@ public class AuthController {
             user.setUsername(unregisteredUser.getUsername());
             user.setPassword(encoder.encode(unregisteredUser.getPassword()));
         } catch(IllegalArgumentException iae) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: " + iae.getMessage());
+            return new ResponseEntity<>("Error: " + iae.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
         Set<String> strRoles = Collections.singleton("mod");
@@ -118,6 +114,6 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok("User registered successfully!");
+        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 }

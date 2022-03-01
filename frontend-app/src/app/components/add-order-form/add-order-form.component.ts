@@ -40,14 +40,13 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		let productURLs = this.productService.convertArrayToProductsArray(this.orderForm.value['products']);
 		let today = new Date();
 
 		let newOrder: Order = {
-			storeName: "",
+			storeName: this.orderForm.value['store'],
 			creationDate: formatDate(today, 'yyyy-MM-dd', 'en'),
 			orderDate: formatDate(today.setDate(today.getDate() + 7), 'yyyy-MM-dd', 'en'),
-			products: productURLs
+			products: this.productService.convertArrayToProductsArray(this.orderForm.value['products'])
 		};
 
 		this.orderService.addOrder(newOrder).subscribe(

@@ -1,6 +1,6 @@
 export interface Product {
 	id?: number;
-    value: String;
-    price: number;
-    storeName: string;
+	url: String;
+	price: number;
+	paid: boolean;
 }

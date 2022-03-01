@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Entity
 @Table(name = "products")
@@ -36,6 +38,17 @@ public class Product {
         this.url = url;
         this.price = price;
         this.paid = paid;
+    }
+
+    public String retrieveStoreName() {
+        URI uri = null;
+        try {
+            uri = new URI(url);
+            String domain = uri.getHost();
+            return domain.startsWith("www.") ? domain.substring(4) : domain;
+        } catch (URISyntaxException e) {
+            return "Error: Invalid URI.";
+        }
     }
 
     public Long getId() {

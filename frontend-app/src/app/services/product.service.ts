@@ -10,11 +10,11 @@ export class ProductService {
 
 	public convertArrayToProductsArray(urlsArray: []): Array<Product> {
 		let productsArray = new Array<Product>();
-		for (let url of urlsArray) {
+		for (let productUrl of urlsArray) {
 			productsArray.push({
-				value: url,
+				url: productUrl,
 				price: 0,
-				storeName: ""
+				paid: false,
 			});
 		}
 		return productsArray;

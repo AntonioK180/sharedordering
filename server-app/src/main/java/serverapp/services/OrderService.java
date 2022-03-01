@@ -26,6 +26,8 @@ public class OrderService {
         order.getProducts().stream().forEach(product -> {
             product.setOrder(savedOrder);
             product.setUser(userService.getCurrentUser());
+
+            System.out.println(product);
         });
         productService.addMultipleProducts(order.getProducts());
         return getOrderById(savedOrder.getId());
