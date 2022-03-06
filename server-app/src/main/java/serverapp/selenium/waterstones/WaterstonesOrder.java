@@ -17,6 +17,10 @@ public class WaterstonesOrder {
 
     private String chromedriverPath = "drivers/chromedriver.exe";
 
+    public WaterstonesOrder() {
+        System.setProperty("webdriver.chrome.driver", chromedriverPath);
+    }
+
     public String getStoreName() {
         return storeName;
     }
@@ -26,8 +30,6 @@ public class WaterstonesOrder {
         double sum = 0;
 
         System.out.println("Working on links" + productsList);
-
-        System.setProperty("webdriver.chrome.driver", chromedriverPath);
 
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
