@@ -8,5 +8,8 @@
     <mat-card-content>
         <p>Date created: {{ order.creationDate }}</p>
         <p>Date to order: {{ order.orderDate }}</p>
+        
+        <button (click)="onDelete(order)">Delete</button>
+
     </mat-card-content>
 </mat-card>

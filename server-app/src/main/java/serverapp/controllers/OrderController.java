@@ -2,6 +2,7 @@ package serverapp.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import serverapp.models.Order;
 import serverapp.services.OrderService;
@@ -34,6 +35,20 @@ public class OrderController {
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         Order newOrder = orderService.addOrder(order);
         return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
+        Order updateOrder = orderService.updateOrder(order.getId(), order);
+        return new ResponseEntity<>(updateOrder, HttpStatus.CREATED);
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Order> deletedOrder(@PathVariable("id") Long id) {
+        orderService.deleteOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
