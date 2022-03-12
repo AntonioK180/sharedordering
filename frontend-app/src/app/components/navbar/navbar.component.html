@@ -1,20 +1,11 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list>
-            <a mat-list-item routerLink="/allorders">All Orders</a>
-            <a mat-list-item routerLink="/neworder">Make Order</a>
-            <a mat-list-item routerLink="/register">Register</a>
-            <a mat-list-item routerLink="/login">Login</a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-            <span>Shared Ordering App</span>
-        </mat-toolbar>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1>Shared Ordering</h1>
+      <span class="menu-spacer"></span>
+      <ul>
+        <li><a mat-button [routerLink]="'/allorders'"> All Orders </a></li>
+        <li><a mat-button [routerLink]="'/neworder'"> Create Order </a></li>
+        <li><a mat-button [routerLink]="'/login'"> Sign In </a></li>
+      </ul>
+    </mat-toolbar-row>
+  </mat-toolbar>

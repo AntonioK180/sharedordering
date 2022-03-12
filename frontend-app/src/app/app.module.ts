@@ -27,6 +27,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { ViewOrdersComponent } from './components/view-orders/view-orders.component';
 import { SingleOrderComponent } from './components/single-order/single-order.component';
+import { RevolutTestComponent } from './components/revolut-test/revolut-test.component';
 
 @NgModule({
 	declarations: [
@@ -38,7 +39,8 @@ import { SingleOrderComponent } from './components/single-order/single-order.com
 		RegistrationFormComponent,
 		LoginFormComponent,
   ViewOrdersComponent,
-  SingleOrderComponent
+  SingleOrderComponent,
+  RevolutTestComponent
 	],
 	imports: [
 		BrowserModule,
