@@ -5,15 +5,14 @@
 }
 
 .main-container {
+    justify-content: space-between;
     max-width: 60%;
+    padding: 0;
     margin: auto;
 }
 
 ul {
-    position: absolute;
-    right: 0;
     list-style-type: none;
-    padding: 0;
     text-align: center;
 }
 

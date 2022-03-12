@@ -1,8 +1,9 @@
 .all-orders {
 	margin: auto;
-	width: 65%;
+	max-width: 60%;
 }
 
 ul {
 	list-style-type: none;
+	padding: 0;
 }
