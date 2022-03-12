@@ -6,8 +6,10 @@
 			<!-- Needs Centering -->
 			<li><a mat-button [routerLink]="'/allorders'"   *ngIf="isLoggedIn"> All Orders </a></li>
 			<li><a mat-button [routerLink]="'/neworder'"    *ngIf="isLoggedIn"> Create Order </a></li>
+			<li><a mat-button [routerLink]="'/myprofile'"   *ngIf="isLoggedIn"> My Profile </a></li>
 			<li><a mat-button [routerLink]="'/login'" 		*ngIf="! isLoggedIn"> Sign In </a></li>
 			<li><a mat-button [routerLink]="'/register'"    *ngIf="! isLoggedIn"> Register </a></li>
+			<li><a mat-button [routerLink]="'/revolut'"> Revolut </a></li>
 		</ul>
 	</mat-toolbar-row>
 </mat-toolbar>

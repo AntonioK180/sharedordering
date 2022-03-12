@@ -22,7 +22,7 @@ export class RevolutTestComponent implements OnInit {
 				console.log(response);
 			},
 			(error) => {
-				console.log("Error: " + error);
+				console.log("Error: " + JSON.stringify(error));
 			}
 		);
 	}
