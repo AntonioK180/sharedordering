@@ -8,6 +8,8 @@ html, body {
 body {
 	background: linear-gradient(60deg, red, blue, green);
 	background-size: 300%;
+	/* background-position: center; */
+	background-attachment: fixed;
 	animation: gradient 10s linear infinite;
 	animation-direction: alternate;
 	background-repeat: no-repeat;
@@ -16,4 +18,21 @@ body {
 @keyframes gradient {
 	0% { background-position: 0% }
 	100% { background-position: 100% }
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
