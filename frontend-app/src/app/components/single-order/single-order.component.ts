@@ -14,9 +14,25 @@ export class SingleOrderComponent implements OnInit {
 	@Output()
 	onDeleteOrder: EventEmitter<Order> = new EventEmitter();
 
+	storeURL: string = "#";
+
 	constructor() { }
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+		this.setStoreURL();
+	}
+
+	setStoreURL() {
+		switch (this.order.storeName) {
+			case 'waterstones':
+				this.storeURL = 'https://www.waterstones.com/';
+				break;
+
+			case 'amazon':
+				this.storeURL = 'https://www.amazon.com/';
+
+		}
+	}
 
 	onDelete(order: Order): void {
 		this.onDeleteOrder.emit(order);

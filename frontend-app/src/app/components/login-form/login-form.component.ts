@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -15,7 +16,7 @@ export class LoginFormComponent {
 		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
 
-	constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService) { }
+	constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
 	onSubmit(): void {
 		if (!this.loginForm.valid) {
@@ -29,6 +30,8 @@ export class LoginFormComponent {
 			(data) => {
 				this.tokenStorage.saveToken(data.accessToken);
 				this.tokenStorage.saveUser(data);
+
+				this.router.navigate(['/allorders']);
 			},
 			(err) => {
 				console.log(err.error);

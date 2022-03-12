@@ -28,6 +28,7 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { ViewOrdersComponent } from './components/view-orders/view-orders.component';
 import { SingleOrderComponent } from './components/single-order/single-order.component';
 import { RevolutTestComponent } from './components/revolut-test/revolut-test.component';
+import { HeroLandingComponent } from './components/hero-landing/hero-landing.component';
 
 @NgModule({
 	declarations: [
@@ -40,7 +41,8 @@ import { RevolutTestComponent } from './components/revolut-test/revolut-test.com
 		LoginFormComponent,
   ViewOrdersComponent,
   SingleOrderComponent,
-  RevolutTestComponent
+  RevolutTestComponent,
+  HeroLandingComponent
 	],
 	imports: [
 		BrowserModule,
