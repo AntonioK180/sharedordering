@@ -31,7 +31,8 @@ export class LoginFormComponent {
 				this.tokenStorage.saveToken(data.accessToken);
 				this.tokenStorage.saveUser(data);
 
-				this.router.navigate(['/allorders']);
+				// Relocate this way so that the navbar gets updated too.
+				window.location.replace('/allorders');
 			},
 			(err) => {
 				console.log(err.error);

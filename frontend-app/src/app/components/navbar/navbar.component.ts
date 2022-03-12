@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
 	constructor(private tokenStorage: TokenStorageService) { }
 
 	ngOnInit(): void {
-		console.log('I got reloaded!');
 		this.updateIsLoggedIn();
 	}
 
