@@ -43,6 +43,10 @@ public class OrderService {
 
     public Order updateOrder(Long id, Order newOrder) {
         Order orderToUpdate = orderRepo.findById(id).orElseThrow(() -> new OrderNotFoundException("Order with ID: " + id + " was not found!"));
+        newOrder.getProducts().stream().forEach(product -> {
+            product.setOrder(orderToUpdate);
+            product.setUser(userService.getCurrentUser());
+        });
         orderToUpdate.setCreationDate(newOrder.getCreationDate());
         orderToUpdate.setStoreName(newOrder.getStoreName());
         orderToUpdate.setOrderDate(newOrder.getOrderDate());

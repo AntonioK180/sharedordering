@@ -20,11 +20,24 @@ export class AddOrderFormComponent implements OnInit {
 		products: this.fb.array([new FormControl(null, Validators.required)]),
 		store: ['amazon', Validators.required]
 	});
+	public allOrders: Order[] = [];
 
 	constructor(private fb: FormBuilder, private orderService: OrderService, private productService: ProductService, private seleniumService: SeleniumService) { }
 
 	public ngOnInit(): void {
+		this.getOrders();
 		console.log("Here I am!");
+	}
+
+	public getOrders(): void {
+		this.orderService.getOrders().subscribe(
+			(response: Order[]) => {
+				this.allOrders = response.reverse();
+			},
+			(error: HttpErrorResponse) => {
+				console.log(error.message);
+			}
+		);
 	}
 
 	public products(): FormArray {
@@ -41,7 +54,7 @@ export class AddOrderFormComponent implements OnInit {
 		this.products().removeAt(index);
 	}
 
-	onSubmit(): void {
+	private getOrderFormValue(): Order {
 		let today = new Date();
 
 		let newOrder: Order = {
@@ -51,10 +64,30 @@ export class AddOrderFormComponent implements OnInit {
 			products: this.productService.convertArrayToProductsArray(this.orderForm.value['products'])
 		};
 
+		return newOrder;
+	}
+
+	private orderExists(): Order | false {
+		console.log("All Orders: " + this.allOrders);
+
+		if (this.allOrders.length > 0) {
+			for (let order of this.allOrders) {
+				if (order.storeName === this.orderForm.value['store']) {
+					return order;
+				}
+			}
+		}
+
+		return false;
+
+	}
+
+	public addNewOrder(): void {
+		let newOrder = this.getOrderFormValue();
+
 		this.orderService.addOrder(newOrder).subscribe(
 			(resposne: Order) => {
 				this.errorText = "";
-				console.log('You have successfully made a new order!: ' + JSON.stringify(resposne.products));
 
 				this.seleniumService.checkLinks(resposne.products).subscribe(
 					(resposne: Array<Product>) => {
@@ -75,6 +108,33 @@ export class AddOrderFormComponent implements OnInit {
 				}
 			}
 		);
+	}
+
+	public updateExistingOrder(existingOrder: Order): void {
+		let newOrder = this.getOrderFormValue();
+		existingOrder.products.concat(newOrder.products);
+
+		this.orderService.updateOrder(existingOrder).subscribe(
+			(response) => {
+				console.log(response);
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	onSubmit(): void {
+		let potentialOrder = this.orderExists();
+		if (potentialOrder) {
+			this.updateExistingOrder(potentialOrder);
+			console.log("ORDER EXISTS!");
+		} else {
+			this.addNewOrder();
+		}
+
+		this.getOrders();
+
 	}
 
 }
