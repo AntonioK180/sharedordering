@@ -1,7 +1,7 @@
-<div *ngFor="let product of myProducts" class="all-products">
+<div *ngFor="let product of myProducts" class="my-products">
 	 <ul>
 		 <li>
-			 <p> {{ product.url }} </p>
+			 <app-single-product [product] = "product"></app-single-product>
 		 </li>
 	 </ul>
  </div>

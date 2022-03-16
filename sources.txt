@@ -3,3 +3,4 @@
 3) https://angular.io/guide/http - in a relation to: "Using class VS an interface for consuming API data"
 4) https://angular.io/api/forms/FormBuilder - in a relation to: "Add order form"
 5) https://blog.angular-university.io/angular-jwt-authentication/ - in a relation to JWT in Angular
+6) https://angular.io/guide/architecture - in a relation to "Angular"

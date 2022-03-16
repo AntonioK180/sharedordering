@@ -17,6 +17,8 @@ public class Product {
     @Size(max = 1024)
     private String url;
 
+    private String displayName;
+
     double price;
 
     Boolean paid;
@@ -33,9 +35,10 @@ public class Product {
 
     public Product() {}
 
-    public Product(Long id, String url, double price, Boolean paid) {
+    public Product(Long id, String url, String displayName, double price, Boolean paid) {
         this.id = id;
         this.url = url;
+        this.displayName = displayName;
         this.price = price;
         this.paid = paid;
     }
@@ -99,5 +102,13 @@ public class Product {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

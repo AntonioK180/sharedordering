@@ -30,6 +30,7 @@ import { SingleOrderComponent } from './components/single-order/single-order.com
 import { RevolutTestComponent } from './components/revolut-test/revolut-test.component';
 import { HeroLandingComponent } from './components/hero-landing/hero-landing.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { SingleProductComponent } from './components/single-product/single-product.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
   SingleOrderComponent,
   RevolutTestComponent,
   HeroLandingComponent,
-  MyProfileComponent
+  MyProfileComponent,
+  SingleProductComponent
 	],
 	imports: [
 		BrowserModule,

@@ -21,6 +21,7 @@ export class ProductService {
 		for (let productUrl of urlsArray) {
 			productsArray.push({
 				url: productUrl,
+				displayName: "const displayName",
 				price: 0,
 				paid: false,
 			});
