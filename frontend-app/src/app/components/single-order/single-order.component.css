@@ -2,3 +2,7 @@ a {
 	color: white;
 	font-weight: bold;
 }
+
+.my-product {
+	max-width: 70%;
+}

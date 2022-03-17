@@ -1,15 +1,22 @@
 <mat-card class="single-order">
     <mat-card-header>
         <mat-card-title>Single Order from <a href="{{ this.storeURL }}"> {{ order.storeName }} </a> </mat-card-title>
-        <mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!displayProducts">
             Join Order!
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+
+        <div *ngIf="displayProducts">
+            <div *ngFor="let product of order.products">
+                <app-single-product [product]="product" class="my-product"> </app-single-product>
+            </div>
+        </div>
+
         <p>Date created: {{ order.creationDate }}</p>
         <p>Date to order: {{ order.orderDate }}</p>
         
-        <button (click)="onDelete(order)">Delete</button>
+        <button *ngIf="!displayProducts" (click)="onDelete(order)">Delete</button>
 
     </mat-card-content>
 </mat-card>

@@ -11,6 +11,9 @@ export class SingleOrderComponent implements OnInit {
 	@Input()
 	order!: Order;
 
+	@Input()
+	displayProducts!: boolean;
+
 	@Output()
 	onDeleteOrder: EventEmitter<Order> = new EventEmitter();
 
