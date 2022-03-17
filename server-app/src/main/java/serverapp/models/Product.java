@@ -14,7 +14,7 @@ public class Product {
     @GeneratedValue
     private Long id;
 
-    @Size(max = 1024)
+    @Column(length = 1024)
     private String url;
 
     private String displayName;

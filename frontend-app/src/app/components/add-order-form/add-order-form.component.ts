@@ -14,7 +14,7 @@ import { Product } from 'src/app/interfaces/product';
 	styleUrls: ['./add-order-form.component.css']
 })
 export class AddOrderFormComponent implements OnInit {
-	private urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+	private urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 	public moreThanOneInputs = false;
 	public errorText = "";
 	public orderForm = this.fb.group({
@@ -114,7 +114,7 @@ export class AddOrderFormComponent implements OnInit {
 
 	public updateExistingOrder(existingOrder: Order): void {
 		let newOrder = this.getOrderFormValue();
-		existingOrder.products = existingOrder.products.concat(newOrder.products);
+		newOrder.id = existingOrder.id;
 
 		this.seleniumService.checkLinks(newOrder.products).subscribe(
 			(resposne: Array<Product>) => {
@@ -126,7 +126,7 @@ export class AddOrderFormComponent implements OnInit {
 			}
 		);
 
-		this.orderService.updateOrder(existingOrder).subscribe(
+		this.orderService.updateOrder(newOrder).subscribe(
 			(response: Order) => {
 				console.log(response);
 			},
@@ -139,9 +139,9 @@ export class AddOrderFormComponent implements OnInit {
 
 	onSubmit(): void {
 		console.log(this.orderForm.controls['products'].valid);
-		if (!this.orderForm.valid) {
-			return;
-		}
+		// if (!this.orderForm.valid) {
+		// 	return;
+		// }
 
 		let potentialOrder = this.orderExists();
 

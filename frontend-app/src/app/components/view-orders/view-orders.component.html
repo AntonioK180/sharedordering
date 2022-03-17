@@ -1,5 +1,4 @@
 <div *ngFor="let order of orders" class="all-orders">
-   <!-- Needs centering -->
     <ul>
         <li>
             <app-single-order [order]="order" (onDeleteOrder)="deleteOrder(order)"></app-single-order>

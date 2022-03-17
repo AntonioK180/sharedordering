@@ -4,11 +4,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+//@Component
 public class WaterstonesHelper {
 
-    private String email_value = "";
-    private String password_value = "";
+    private String email_value = " ";
+    private String password_value = " ";
+
 
     private String startUrl = "https://www.waterstones.com/";
     private WebDriver driver;
@@ -37,6 +44,7 @@ public class WaterstonesHelper {
         WebElement emailInput = driver.findElement(By.id("login_form_email"));
         emailInput.clear();
         emailInput.sendKeys(email_value);
+        System.out.println("EMAIL VALUE: " + email_value);
 
         WebElement passwordInput = driver.findElement(By.id("login_form_password"));
         passwordInput.clear();

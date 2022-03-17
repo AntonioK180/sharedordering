@@ -26,7 +26,7 @@ public class ProductController {
         this.productRepo = productRepo;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Product>> getCurrentUserProducts() {
         User currentUser = userService.getCurrentUser();
         List<Product> currentUserProducts = productRepo.findByUserId(currentUser.getId());

@@ -26,6 +26,10 @@ export class OrderService {
 	}
 
 	public deleteOrder(orderId: number | undefined): Observable<void> {
-		return this.http.delete<void>(ORDERS_API + '/' + orderId);
+		return this.http.delete<void>(`${ORDERS_API}/${orderId}`);
+	}
+
+	public getCurrentUserOrders(): Observable<Order[]> {
+		return this.http.get<Order[]>(`${ORDERS_API}/user`);
 	}
 }

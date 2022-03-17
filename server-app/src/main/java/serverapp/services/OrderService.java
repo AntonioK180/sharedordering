@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import serverapp.exceptions.OrderNotFoundException;
 import serverapp.models.Order;
 import serverapp.models.Product;
+import serverapp.models.User;
 import serverapp.repositories.OrderRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +33,29 @@ public class OrderService {
         return orderRepo.findAll();
     }
 
+    public List<Order> getCurrentUserOrders() {
+        List<Order> allOrders = getAllOrders();
+        User currentUser = userService.getCurrentUser();
+
+        allOrders.stream().forEach(order -> {
+            List<Product> userProducts = new ArrayList<>();
+            order.getProducts().stream().forEach(product -> {
+                if (product.getUser() == currentUser) {
+                    userProducts.add(product);
+                }
+            });
+
+            if (userProducts.isEmpty()) {
+                allOrders.remove(order);
+            } else {
+                order.setProducts(userProducts);
+            }
+
+        });
+
+        return allOrders;
+    }
+
     public Order addOrder(Order order) {
         Order savedOrder = orderRepo.save(order);
         order.getProducts().stream().forEach(product -> {
@@ -51,6 +76,7 @@ public class OrderService {
         orderToUpdate.setStoreName(newOrder.getStoreName());
         orderToUpdate.setOrderDate(newOrder.getOrderDate());
         List<Product> products = productService.addMultipleProducts(newOrder.getProducts());
+        products.addAll(orderToUpdate.getProducts());
         orderToUpdate.setProducts(products);
 
         return orderRepo.save(orderToUpdate);

@@ -30,10 +30,11 @@ public class WaterstonesOrder {
     public List<Product> checkLinks(List<Product> productsList) {
         ArrayList<Product> validProducts = new ArrayList<>();
 
-        System.out.println("Working on links" + productsList);
+        // ChromeOptions options = new ChromeOptions();
+        // options.addArguments("headless");
 
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
         waterstonesHelper = new WaterstonesHelper(driver);
         waterstonesHelper.goToHomePage();
@@ -58,11 +59,11 @@ public class WaterstonesOrder {
     public void makeAnOrder(List<Product> productsList) {
         System.setProperty("webdriver.chrome.driver", chromedriverPath);
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("headless");
 
-        driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
         waterstonesHelper = new WaterstonesHelper(driver);
 

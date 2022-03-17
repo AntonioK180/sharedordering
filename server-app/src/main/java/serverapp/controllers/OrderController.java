@@ -31,6 +31,13 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<List<Order>> getCurrentUserOrders() {
+        List<Order> currentUserOrders = orderService.getCurrentUserOrders();
+
+        return new ResponseEntity<>(currentUserOrders, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         Order newOrder = orderService.addOrder(order);
