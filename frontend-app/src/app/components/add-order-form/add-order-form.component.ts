@@ -14,10 +14,11 @@ import { Product } from 'src/app/interfaces/product';
 	styleUrls: ['./add-order-form.component.css']
 })
 export class AddOrderFormComponent implements OnInit {
+	private urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 	public moreThanOneInputs = false;
 	public errorText = "";
 	public orderForm = this.fb.group({
-		products: this.fb.array([new FormControl(null, Validators.required)]),
+		products: this.fb.array([new FormControl(null, [Validators.required, Validators.pattern(this.urlRegex)])]),
 		store: ['amazon', Validators.required]
 	});
 	public allOrders: Order[] = [];
@@ -46,7 +47,7 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	public addProduct() {
-		this.products().push(new FormControl(null, Validators.required));
+		this.products().push(new FormControl(null, [Validators.required, Validators.pattern(this.urlRegex)]));
 	}
 
 	public removeProduct(index: number) {
@@ -84,19 +85,20 @@ export class AddOrderFormComponent implements OnInit {
 	public addNewOrder(): void {
 		let newOrder = this.getOrderFormValue();
 
+		this.seleniumService.checkLinks(newOrder.products).subscribe(
+			(resposne: Array<Product>) => {
+				console.log(resposne);
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+
+
 		this.orderService.addOrder(newOrder).subscribe(
 			(resposne: Order) => {
 				this.allOrders.push(resposne);
 				this.errorText = "";
-
-				this.seleniumService.checkLinks(resposne.products).subscribe(
-					(resposne: Array<Product>) => {
-						console.log(resposne);
-					},
-					(error) => {
-						console.log(error);
-					}
-				)
 			},
 			(error: HttpErrorResponse) => {
 				console.log(error);
@@ -112,12 +114,23 @@ export class AddOrderFormComponent implements OnInit {
 
 	public updateExistingOrder(existingOrder: Order): void {
 		let newOrder = this.getOrderFormValue();
-		existingOrder.products.concat(newOrder.products);
+		existingOrder.products = existingOrder.products.concat(newOrder.products);
+
+		this.seleniumService.checkLinks(newOrder.products).subscribe(
+			(resposne: Array<Product>) => {
+				console.log("Are URLs valid?: ");
+				console.log(resposne);
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
 
 		this.orderService.updateOrder(existingOrder).subscribe(
-			(response) => {
+			(response: Order) => {
 				console.log(response);
 			},
+
 			(error) => {
 				console.log(error);
 			}
@@ -125,6 +138,11 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
+		console.log(this.orderForm.controls['products'].valid);
+		if (!this.orderForm.valid) {
+			return;
+		}
+
 		let potentialOrder = this.orderExists();
 
 		potentialOrder ? this.updateExistingOrder(potentialOrder) : this.addNewOrder();

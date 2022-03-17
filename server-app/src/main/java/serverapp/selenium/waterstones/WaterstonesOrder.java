@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import serverapp.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,26 +27,32 @@ public class WaterstonesOrder {
     }
 
 
-    public double checkLinks(List<Product> productsList) {
-        double sum = 0;
+    public List<Product> checkLinks(List<Product> productsList) {
+        ArrayList<Product> validProducts = new ArrayList<>();
 
         System.out.println("Working on links" + productsList);
 
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         waterstonesHelper = new WaterstonesHelper(driver);
         waterstonesHelper.goToHomePage();
 
         for (Product product : productsList) {
-            double price = waterstonesHelper.visitItem(product.getUrl());
-            product.setPrice(price);
-            sum += price;
+            try {
+                double price = waterstonesHelper.visitItem(product.getUrl());
+                product.setPrice(price);
+                validProducts.add(product);
+            } catch(Exception e) {
+                System.out.println("ERROR FROM ME: " + e.getMessage());
+                continue;
+            }
+
         }
 
         driver.close();
 
-        return sum;
+        return validProducts;
     }
 
     public void makeAnOrder(List<Product> productsList) {

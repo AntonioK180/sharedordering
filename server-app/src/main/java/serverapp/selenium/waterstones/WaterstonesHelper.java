@@ -45,16 +45,13 @@ public class WaterstonesHelper {
         driver.findElement(By.name("Login")).click();
     }
 
-    private double getPrice() {
-//        driver.findElement(By.xpath("//input[@value='Next: Delivery']")).click();
-
+    private double getPrice() throws Exception {
         WebElement priceInBox = driver.findElement(By.xpath("//b[@itemprop='price']"));
         String priceString = priceInBox.getText().substring(1);
-
         return Double.parseDouble(priceString);
     }
 
-    public double visitItem(String url) {
+    public double visitItem(String url) throws Exception {
         driver.navigate().to(url);
 
         return getPrice();

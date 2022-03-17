@@ -39,8 +39,8 @@ public class OrderController {
 
     @PutMapping
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-        Order updateOrder = orderService.updateOrder(order.getId(), order);
-        return new ResponseEntity<>(updateOrder, HttpStatus.CREATED);
+        Order updatedOrder = orderService.updateOrder(order.getId(), order);
+        return new ResponseEntity<>(updatedOrder, HttpStatus.CREATED);
     }
 
 

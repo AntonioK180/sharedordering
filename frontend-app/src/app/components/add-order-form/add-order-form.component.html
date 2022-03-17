@@ -10,6 +10,12 @@
                         <div class="col">
                             <mat-form-field class="full-width">
                                 <input [formControlName]="i" matInput placeholder="Product URL" formControlName="products" class="shorter-input">
+                                <mat-error *ngIf="product.errors?.required">
+                                    Product field cannot be <strong>empty</strong>
+                                </mat-error>
+                                <mat-error *ngIf="product.errors?.pattern">
+                                    <strong> Invalid URL </strong>
+                                </mat-error>
                                 <button mat-button *ngIf="moreThanOneInputs && i !== 0" (click)="removeProduct(i)" class="remove-product">-</button>
                             </mat-form-field>
                         </div>
