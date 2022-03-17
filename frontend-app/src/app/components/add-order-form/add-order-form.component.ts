@@ -26,7 +26,6 @@ export class AddOrderFormComponent implements OnInit {
 
 	public ngOnInit(): void {
 		this.getOrders();
-		console.log("Here I am!");
 	}
 
 	public getOrders(): void {
@@ -68,8 +67,8 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	private orderExists(): Order | false {
-		console.log("All Orders: " + this.allOrders);
-
+		this.getOrders();
+		console.log(this.allOrders);
 		if (this.allOrders.length > 0) {
 			for (let order of this.allOrders) {
 				if (order.storeName === this.orderForm.value['store']) {
@@ -87,6 +86,7 @@ export class AddOrderFormComponent implements OnInit {
 
 		this.orderService.addOrder(newOrder).subscribe(
 			(resposne: Order) => {
+				this.allOrders.push(resposne);
 				this.errorText = "";
 
 				this.seleniumService.checkLinks(resposne.products).subscribe(
@@ -126,15 +126,8 @@ export class AddOrderFormComponent implements OnInit {
 
 	onSubmit(): void {
 		let potentialOrder = this.orderExists();
-		if (potentialOrder) {
-			this.updateExistingOrder(potentialOrder);
-			console.log("ORDER EXISTS!");
-		} else {
-			this.addNewOrder();
-		}
 
-		this.getOrders();
-
+		potentialOrder ? this.updateExistingOrder(potentialOrder) : this.addNewOrder();
 	}
 
 }
