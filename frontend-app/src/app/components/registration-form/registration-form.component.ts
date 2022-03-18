@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class RegistrationFormComponent {
 		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
 
-	constructor(private fb: FormBuilder, private authService: AuthService) { }
+	constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
 	onSubmit(): void {
 		if (!this.registrationForm.valid) {
@@ -28,14 +29,14 @@ export class RegistrationFormComponent {
 		let password = this.registrationForm.value['password'];
 
 		this.authService.register(email, password).subscribe(
-			(response) => {
+			() => {
 				this.isSignUpFailed = false;
-				// navigate to login page
+				this.router.navigate(['/login']);
 			},
-			(err) => {
+			(error) => {
 				this.isSignUpFailed = true;
-				console.log(err.error);
-				switch (err.error) {
+				console.log(error.error);
+				switch (error.error) {
 					case "Error: rawPassword cannot be null":
 						this.errorText = "Password cannot be empty!";
 						break;

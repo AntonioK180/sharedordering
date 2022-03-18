@@ -97,18 +97,18 @@ export class AddOrderFormComponent implements OnInit {
 					},
 					(error: HttpErrorResponse) => {
 						console.log(error);
-
-						switch (error.status) {
-							case 401:
-								this.errorText = "You need to be logged in!";
-								break;
-						}
 					}
 				);
 
 			},
 			(error) => {
 				console.log(error);
+
+				switch (error.status) {
+					case 401:
+						this.errorText = "You need to be logged in!";
+						break;
+				}
 			}
 		);
 
@@ -120,30 +120,30 @@ export class AddOrderFormComponent implements OnInit {
 
 		this.seleniumService.checkLinks(newOrder.products).subscribe(
 			(resposne: Array<Product>) => {
-				console.log("Are URLs valid?: ");
-				console.log(resposne);
+				newOrder.products = resposne;
+				this.orderService.updateOrder(newOrder).subscribe(
+					(response: Order) => {
+						console.log(response);
+					},
+
+					(error) => {
+						console.log(error);
+					}
+				);
 			},
 			(error) => {
 				console.log(error);
 			}
 		);
 
-		this.orderService.updateOrder(newOrder).subscribe(
-			(response: Order) => {
-				console.log(response);
-			},
 
-			(error) => {
-				console.log(error);
-			}
-		);
 	}
 
 	onSubmit(): void {
 		console.log(this.orderForm.controls['products'].valid);
-		if (!this.orderForm.valid) {
-			return;
-		}
+		// if (!this.orderForm.valid) {
+		// 	return;
+		// }
 
 		let potentialOrder = this.orderExists();
 

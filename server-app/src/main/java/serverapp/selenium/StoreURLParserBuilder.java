@@ -1,5 +1,6 @@
 package serverapp.selenium;
 
+import serverapp.selenium.amazon.AmazonURLParser;
 import serverapp.selenium.waterstones.WaterStonesURLParser;
 
 // Factory Builder pattern
@@ -11,7 +12,7 @@ public class StoreURLParserBuilder {
                 return new WaterStonesURLParser();
 
             case "amazon.com":
-                return new WaterStonesURLParser();
+                return new AmazonURLParser();
         }
 
         return null;
