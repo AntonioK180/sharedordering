@@ -35,6 +35,18 @@ public class SeleniumController {
         this.productService = productService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> executeOrder(@PathVariable("id") Long id) {
+        Order orderToExecute = orderService.getOrderById(id);
+
+        System.out.println("THIS IS THE STORE: " + orderToExecute.getStoreName());
+        StoreURLParser storeURLParser = storeURLParserBuilder.getURLParser(orderToExecute.getStoreName());
+
+        storeURLParser.executeOrder(orderToExecute.getProducts());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("waterstones/{id}")
     public ResponseEntity<Order> makeOrder(@PathVariable("id") Long id) {
         Order order = orderService.getOrderById(id);

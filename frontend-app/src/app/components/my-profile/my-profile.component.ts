@@ -13,6 +13,7 @@ export class MyProfileComponent implements OnInit {
 
 	public myProducts: Product[] = [];
 	public myOrders: Order[] = [];
+	public errorText = "";
 
 	constructor(private productService: ProductService, private orderService: OrderService) { }
 
@@ -40,6 +41,11 @@ export class MyProfileComponent implements OnInit {
 				this.myProducts = response;
 			},
 			(error) => {
+				switch (error.status) {
+					case 401:
+						this.errorText = "YOU ARE NOT LOGGED IN!";
+						break;
+				}
 				console.log(error);
 			}
 		)

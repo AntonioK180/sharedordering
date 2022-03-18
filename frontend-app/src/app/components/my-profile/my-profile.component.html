@@ -1,7 +1,11 @@
-<div *ngFor="let order of myOrders" class="my-orders">
-    <ul>
-        <li>
-            <app-single-order [order]="order" [displayProducts]="true" ></app-single-order>
-        </li>
-    </ul>
+<div class="my-profile">
+    <div *ngFor="let order of myOrders" class="my-orders">
+        <ul>
+            <li>
+                <app-single-order [order]="order" [displayProducts]="true" ></app-single-order>
+            </li>
+        </ul>
+    </div>
+
+    <mat-error class="error-section" *ngIf="errorText.length !== 0"><b> {{ errorText }} </b></mat-error>
 </div>

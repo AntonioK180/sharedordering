@@ -115,6 +115,9 @@ export class AddOrderFormComponent implements OnInit {
 					return;
 				}
 
+				let priceSum = this.calcSumPrice(response);
+				this.triggerBackendPayment(priceSum, 'USD');
+
 				newOrder.products = response;
 
 				this.orderService.addOrder(newOrder).subscribe(
@@ -196,7 +199,7 @@ export class AddOrderFormComponent implements OnInit {
 
 	public triggerBackendPayment(amount: number, currency: string) {
 		let revolutDTO = {
-			amount: amount,
+			amount: amount * 100,
 			currency: currency
 		}
 

@@ -11,6 +11,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class LoginFormComponent {
 
+	public errorText = "";
 	loginForm = this.fb.group({
 		email: [null, [Validators.required, Validators.email]],
 		password: [null, [Validators.required, Validators.minLength(6)]],
@@ -27,15 +28,19 @@ export class LoginFormComponent {
 		let password = this.loginForm.value['password'];
 
 		this.authService.login(email, password).subscribe(
-			(data) => {
-				this.tokenStorage.saveToken(data.accessToken);
-				this.tokenStorage.saveUser(data);
+			(response) => {
+				this.tokenStorage.saveToken(response.accessToken);
+				this.tokenStorage.saveUser(response);
 
 				// Relocate this way so that the navbar gets updated too.
 				window.location.replace('/allorders');
 			},
-			(err) => {
-				console.log(err.error);
+			(error) => {
+				console.log(error.error);
+				switch (error.status) {
+					case 401:
+						this.errorText = "Bad credentials";
+				}
 			}
 		);
 	}
