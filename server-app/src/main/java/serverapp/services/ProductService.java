@@ -22,6 +22,10 @@ public class ProductService {
         return productRepo.save(product);
     }
 
+    public void deleteAll(List<Product> products) {
+        productRepo.deleteAll(products);
+    }
+
     public List<Product> addMultipleProducts(List<Product> products) {
         return productRepo.saveAll(products);
     }

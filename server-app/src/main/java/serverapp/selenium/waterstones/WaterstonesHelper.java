@@ -4,13 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-//@Component
+
 public class WaterstonesHelper {
 
 //    @Value("${waterstones.email}")
@@ -22,7 +17,6 @@ public class WaterstonesHelper {
     private String startUrl = "https://www.waterstones.com/";
     private WebDriver driver;
 
-//    @Autowired
     public WaterstonesHelper(WebDriver driver) {
         this.driver = driver;
     }
@@ -55,16 +49,19 @@ public class WaterstonesHelper {
         driver.findElement(By.name("Login")).click();
     }
 
-    private double getPrice() throws Exception {
+    public double getPrice() throws Exception {
         WebElement priceInBox = driver.findElement(By.xpath("//b[@itemprop='price']"));
         String priceString = priceInBox.getText().substring(1);
         return Double.parseDouble(priceString);
     }
 
-    public double visitItem(String url) throws Exception {
-        driver.navigate().to(url);
+    public String getDisplayName() throws Exception {
+        WebElement name = driver.findElement(By.cssSelector("#scope_book_title"));
+        return name.getText();
+    }
 
-        return getPrice();
+    public void visitItem(String url) {
+        driver.navigate().to(url);
     }
 
     public void addToCart(String url) {

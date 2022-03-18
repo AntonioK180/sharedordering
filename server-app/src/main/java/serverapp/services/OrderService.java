@@ -90,6 +90,7 @@ public class OrderService {
         Order orderToDelete = orderRepo.findOrderById(id)
                 .orElseThrow(() -> new OrderNotFoundException("Order with ID: " + id + " was not found!"));
 
+        productService.deleteAll(orderToDelete.getProducts());
         orderRepo.delete(orderToDelete);
     }
 

@@ -44,10 +44,11 @@ public class WaterstonesOrder {
 
         for (Product product : productsList) {
             try {
-                double price = waterstonesHelper.visitItem(product.getUrl());
-                System.out.println("PRICE IS: " + price);
+                waterstonesHelper.visitItem(product.getUrl());
+                double price = waterstonesHelper.getPrice();
+                String displayName = waterstonesHelper.getDisplayName();
                 product.setPrice(price);
-//                productService.updateProduct(product.getId(), product);
+                product.setDisplayName(displayName);
                 validProducts.add(product);
             } catch(Exception e) {
                 System.out.println("ERROR FROM ME: " + e.getMessage());

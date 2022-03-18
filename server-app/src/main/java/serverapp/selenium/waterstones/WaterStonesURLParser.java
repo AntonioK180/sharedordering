@@ -33,8 +33,11 @@ public class WaterStonesURLParser implements StoreURLParser {
 
         for (Product product : productsList) {
             try {
-                double price = waterstonesHelper.visitItem(product.getUrl());
+                waterstonesHelper.visitItem(product.getUrl());
+                double price = waterstonesHelper.getPrice();
+                String displayName = waterstonesHelper.getDisplayName();
                 product.setPrice(price);
+                product.setDisplayName(displayName);
                 validProducts.add(product);
             } catch(Exception e) {
                 System.out.println("WATERSTONES URL CHECK ERROR: " + e.getMessage());
