@@ -4,6 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Map;
+import static serverapp.selenium.StoreURLParser.credentialsFilePath;
 
 
 public class WaterstonesHelper {
@@ -21,6 +29,19 @@ public class WaterstonesHelper {
         this.driver = driver;
     }
 
+    private void initializeCredentials() {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(new File(credentialsFilePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Yaml yaml = new Yaml();
+        Map<String, Object> data = yaml.load(inputStream);
+        this.email_value = (String) data.get("waterstonesEmail");
+        this.password_value = (String) data.get("waterstonesPassword");
+    }
+
     public void goToHomePage() {
         driver.navigate().to(startUrl);
     }
@@ -31,6 +52,8 @@ public class WaterstonesHelper {
     }
 
     public void signInAccount() {
+        this.initializeCredentials();
+
         this.goToHomePage();
         driver.navigate().to(startUrl + "/signin");
 

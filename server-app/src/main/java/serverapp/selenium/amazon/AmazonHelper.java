@@ -3,11 +3,20 @@ package serverapp.selenium.amazon;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Map;
+
+import static serverapp.selenium.StoreURLParser.credentialsFilePath;
 
 public class AmazonHelper {
 
-    private String accountEmail = " ";
-    private String accountPassword = " ";
+    private String email_value = " ";
+    private String password_value = " ";
 
     private String startUrl = "https://www.amazon.com/";
     private WebDriver driver;
@@ -20,19 +29,34 @@ public class AmazonHelper {
         driver.navigate().to(startUrl);
     }
 
+    private void initializeCredentials() {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(new File(credentialsFilePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Yaml yaml = new Yaml();
+        Map<String, Object> data = yaml.load(inputStream);
+        this.email_value = (String) data.get("amazonEmail");
+        this.password_value = (String) data.get("amazonPassword");
+    }
+
     public void signInAccount() {
+        this.initializeCredentials();
+
         this.goToHomePage();
         driver.findElement(By.id("nav-link-accountList")).click();
 
         WebElement emailInput = driver.findElement(By.id("ap_email"));
         emailInput.clear();
-        emailInput.sendKeys(accountEmail);
+        emailInput.sendKeys(email_value);
 
         driver.findElement(By.id("continue")).click();
 
         WebElement passwordInput = driver.findElement(By.id("ap_password"));
         passwordInput.clear();
-        passwordInput.sendKeys(accountPassword);
+        passwordInput.sendKeys(password_value);
 
         driver.findElement(By.id("signInSubmit")).click();
     }

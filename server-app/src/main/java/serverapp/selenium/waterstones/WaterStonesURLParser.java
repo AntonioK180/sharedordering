@@ -53,6 +53,18 @@ public class WaterStonesURLParser implements StoreURLParser {
 
     @Override
     public void executeOrder(List<Product> productsList) {
+        driverConfig();
+        waterstonesHelper.goToHomePage();
+        waterstonesHelper.signInAccount();
+
+        for (Product product : productsList) {
+            System.out.println("Ordering from: " + product.getUrl());
+            waterstonesHelper.addToCart(product.getUrl());
+        }
+
+        waterstonesHelper.proceedToCheckout();
+
+        driver.close();
 
     }
 

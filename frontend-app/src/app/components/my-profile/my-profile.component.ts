@@ -46,7 +46,6 @@ export class MyProfileComponent implements OnInit {
 						this.errorText = "YOU ARE NOT LOGGED IN!";
 						break;
 				}
-				console.log(error);
 			}
 		)
 	}

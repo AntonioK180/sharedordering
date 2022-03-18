@@ -13,8 +13,8 @@ export class SeleniumService {
 
 	constructor(private http: HttpClient) { }
 
-	public makeOrder(orderId: number, storeName: string): Observable<void> {
-		return this.http.get<void>(SELENIUM_API + `/${storeName}/${orderId}`);
+	public makeOrder(orderId: number): Observable<void> {
+		return this.http.get<void>(SELENIUM_API + `/${orderId}`);
 	}
 
 	checkLinks(productsDTO: object): Observable<Array<Product>> {

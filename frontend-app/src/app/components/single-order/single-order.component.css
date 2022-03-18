@@ -6,3 +6,8 @@ a {
 .my-product {
 	max-width: 70%;
 }
+
+button {
+	margin-left: 0.5em;
+	background-color: #c2185b;
+}

@@ -16,7 +16,10 @@
         <p>Date created: {{ order.creationDate }}</p>
         <p>Date to order: {{ order.orderDate }}</p>
         
-        <button *ngIf="!displayProducts" (click)="onDelete(order)">Delete</button>
-
     </mat-card-content>
+
+    <div class="cta-buttons">
+        <button mat-stroked-button *ngIf="!displayProducts" (click)="onDelete(order)">Delete</button>
+        <button mat-stroked-button *ngIf="!displayProducts" (click)="executeOrder()">Execute Order</button>
+    </div>
 </mat-card>

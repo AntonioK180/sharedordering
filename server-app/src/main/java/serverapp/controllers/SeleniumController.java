@@ -1,18 +1,15 @@
 package serverapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serverapp.models.Order;
 import serverapp.models.Product;
-import serverapp.repositories.OrderRepo;
 import serverapp.selenium.ProductsValidationDTO;
 import serverapp.selenium.StoreURLParser;
 import serverapp.selenium.StoreURLParserBuilder;
 import serverapp.selenium.amazon.AmazonOrder;
-import serverapp.selenium.waterstones.WaterstonesOrder;
 import serverapp.services.OrderService;
 import serverapp.services.ProductService;
 
@@ -22,7 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/selenium")
 public class SeleniumController {
-    WaterstonesOrder waterstonesOrder = new WaterstonesOrder();
     AmazonOrder amazonOrder = new AmazonOrder();
     StoreURLParserBuilder storeURLParserBuilder = new StoreURLParserBuilder();
 
@@ -50,8 +46,6 @@ public class SeleniumController {
     @GetMapping("waterstones/{id}")
     public ResponseEntity<Order> makeOrder(@PathVariable("id") Long id) {
         Order order = orderService.getOrderById(id);
-
-        waterstonesOrder.makeAnOrder(order.getProducts());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

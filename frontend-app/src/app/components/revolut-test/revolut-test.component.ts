@@ -33,39 +33,39 @@ export class RevolutTestComponent implements OnInit {
 		);
 	}
 
-	public orderFromWaterstones() {
-		for (let order of this.allOrders) {
-			console.log(order.storeName);
-			if (order.storeName === 'waterstones' && order.id) {
-				this.seleniumService.makeOrder(order.id, order.storeName).subscribe(
-					(response) => {
-						console.log(response);
-					},
-					(error) => {
-						console.log(error);
-					}
-				);
-			}
-		}
-		console.log("I will execute an order from Waterstones!");
-	}
+	// public orderFromWaterstones() {
+	// 	for (let order of this.allOrders) {
+	// 		console.log(order.storeName);
+	// 		if (order.storeName === 'waterstones' && order.id) {
+	// 			this.seleniumService.makeOrder(order.id, order.storeName).subscribe(
+	// 				(response) => {
+	// 					console.log(response);
+	// 				},
+	// 				(error) => {
+	// 					console.log(error);
+	// 				}
+	// 			);
+	// 		}
+	// 	}
+	// 	console.log("I will execute an order from Waterstones!");
+	// }
 
 
-	public orderFromAmazon() {
-		for (let order of this.allOrders) {
-			console.log(order.storeName);
-			if (order.storeName === 'amazon' && order.id) {
-				this.seleniumService.makeOrder(order.id, order.storeName).subscribe(
-					(response) => {
-						console.log(response);
-					},
-					(error) => {
-						console.log(error);
-					}
-				);
-			}
-		}
-		console.log("I will execute an order from Amazon!");
-	}
+	// public orderFromAmazon() {
+	// 	for (let order of this.allOrders) {
+	// 		console.log(order.storeName);
+	// 		if (order.storeName === 'amazon' && order.id) {
+	// 			this.seleniumService.makeOrder(order.id, order.storeName).subscribe(
+	// 				(response) => {
+	// 					console.log(response);
+	// 				},
+	// 				(error) => {
+	// 					console.log(error);
+	// 				}
+	// 			);
+	// 		}
+	// 	}
+	// 	console.log("I will execute an order from Amazon!");
+	// }
 
 }

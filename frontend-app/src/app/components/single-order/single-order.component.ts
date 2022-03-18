@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Order } from 'src/app/interfaces/order';
+import { SeleniumService } from 'src/app/services/selenium.service';
 
 @Component({
 	selector: 'app-single-order',
@@ -19,7 +20,7 @@ export class SingleOrderComponent implements OnInit {
 
 	storeURL: string = "#";
 
-	constructor() { }
+	constructor(private seleniumService: SeleniumService) { }
 
 	ngOnInit(): void {
 		this.setStoreURL();
@@ -27,11 +28,11 @@ export class SingleOrderComponent implements OnInit {
 
 	setStoreURL() {
 		switch (this.order.storeName) {
-			case 'waterstones':
+			case 'waterstones.com':
 				this.storeURL = 'https://www.waterstones.com/';
 				break;
 
-			case 'amazon':
+			case 'amazon.com':
 				this.storeURL = 'https://www.amazon.com/';
 
 		}
@@ -39,5 +40,18 @@ export class SingleOrderComponent implements OnInit {
 
 	onDelete(order: Order): void {
 		this.onDeleteOrder.emit(order);
+	}
+
+	executeOrder() {
+		if (this.order.id !== undefined) {
+			this.seleniumService.makeOrder(this.order.id).subscribe(
+				(response) => {
+					console.log(response);
+				},
+				(error) => {
+					console.log(error);
+				}
+			)
+		}
 	}
 }
