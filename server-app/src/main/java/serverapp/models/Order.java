@@ -2,7 +2,6 @@ package serverapp.models;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.Size;
 

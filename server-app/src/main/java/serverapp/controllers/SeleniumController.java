@@ -38,7 +38,6 @@ public class SeleniumController {
     @GetMapping("waterstones/{id}")
     public ResponseEntity<Order> makeOrder(@PathVariable("id") Long id) {
         Order order = orderService.getOrderById(id);
-        System.out.println("I will be ordering from Waterstones!");
 
         waterstonesOrder.makeAnOrder(order.getProducts());
 
@@ -50,15 +49,10 @@ public class SeleniumController {
         List<Product> productList = productsValidationDTO.getProducts();
         String storeName = productsValidationDTO.getStoreName();
 
-        System.out.println("PRODUCTS: " + productList);
-        System.out.println("STORE NAME: " + storeName);
-
         if (!productList.isEmpty()) {
             ArrayList<Product> invalidProductURLs = new ArrayList<>();
             ArrayList<Product> validProductURLs = new ArrayList<>();
             StoreURLParser storeURLParser = storeURLParserBuilder.getURLParser(storeName);
-
-            System.out.println("Store URL Parser: " + storeURLParser.getClass().toString());
 
             for (Product product : productList) {
                 if (!product.retrieveStoreName().equals(storeURLParser.getStoreName())) {
@@ -75,6 +69,7 @@ public class SeleniumController {
                         }
                 );
                 return new ResponseEntity<>(invalidProductURLs, HttpStatus.OK);
+
             } else if (!validProductURLs.isEmpty()) {
                 validProductURLs = (ArrayList<Product>) storeURLParser.checkLinks(validProductURLs);
                 return new ResponseEntity<>(validProductURLs, HttpStatus.OK);

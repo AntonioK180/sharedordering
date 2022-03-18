@@ -163,12 +163,16 @@ export class AddOrderFormComponent implements OnInit {
 
 		this.seleniumService.checkLinks(productsDTO).subscribe(
 			(response: Array<Product>) => {
-				if (!this.allURLsValid(response)) {
+				if (!this.allURLsValid(response) || response.length === 0) {
 					this.errorText = "Some of the entered URLs are invalid.";
 					return;
 				}
 
 				newOrder.products = response;
+
+				console.log("NEW ORDER PRODUCTS: ");
+				console.log(newOrder.products);
+
 				let priceSum = this.calcSumPrice(response);
 
 				this.triggerBackendPayment(priceSum, 'USD');
@@ -196,6 +200,8 @@ export class AddOrderFormComponent implements OnInit {
 			currency: currency
 		}
 
+
+
 		this.revolutService.triggerBackendPayment(revolutDTO).subscribe(
 			(response) => {
 
@@ -203,6 +209,7 @@ export class AddOrderFormComponent implements OnInit {
 					let element = document.getElementById('revolut-pay');
 
 					if (element !== null) {
+						element.innerHTML = "";
 						instance.revolutPay({
 							target: element,
 							onSuccess() {
@@ -225,9 +232,10 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		if (!this.orderForm.valid) {
-			return;
-		}
+
+		// if (!this.orderForm.valid) {
+		// 	return;
+		// }
 
 		console.log("ALL ORDERS: ");
 		console.log(this.allOrders);

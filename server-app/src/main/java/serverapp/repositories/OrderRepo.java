@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface OrderRepo extends JpaRepository<Order, Long> {
     Optional<Order> findOrderById(Long id);
-
 }

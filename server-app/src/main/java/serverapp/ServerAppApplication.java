@@ -34,9 +34,4 @@ public class ServerAppApplication {
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
 
-//	@Bean
-//	public WebDriver webDriver() {
-//		return new ChromeDriver();
-//	}
-
 }

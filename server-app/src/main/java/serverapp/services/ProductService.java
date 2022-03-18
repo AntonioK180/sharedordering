@@ -26,6 +26,10 @@ public class ProductService {
         return productRepo.saveAll(products);
     }
 
+    public List<Product> getUserProducts(Long userId) {
+        return productRepo.findByUserId(userId);
+    }
+
     public Product updateProduct(Long id, Product product) {
         Product oldProduct = productRepo.findProductById(id).orElseThrow(() -> new OrderNotFoundException("Product with ID: " + id + " was not found!"));
 

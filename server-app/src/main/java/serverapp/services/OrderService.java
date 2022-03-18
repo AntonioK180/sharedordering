@@ -35,28 +35,29 @@ public class OrderService {
     }
 
     public List<Order> getCurrentUserOrders() {
+        User currentUser = userService.getCurrentUser();
         List<Order> allOrders = getAllOrders();
         List<Order> userOrders = new ArrayList<>();
-        User currentUser = userService.getCurrentUser();
 
-        allOrders.stream().forEach(order -> {
+        allOrders.forEach(order -> {
             List<Product> userProducts = new ArrayList<>();
-            order.getProducts().stream().forEach(product -> {
-                if (product.getUser() == currentUser) {
+            List<Product> orderProducts = order.getProducts();
+            orderProducts.forEach(product -> {
+                if (product.getUser().getId() == currentUser.getId()) {
                     userProducts.add(product);
                 }
             });
 
-            if (userProducts.isEmpty()) {
-                allOrders.remove(order);
-            } else {
-                order.setProducts(userProducts);
-                userOrders.add(order);
-            }
+//            if (userProducts.isEmpty()) {
+//                allOrders.remove(order);
+//            } else {
+//                order.setProducts(userProducts);
+//                userOrders.add(order);
+//            }
 
         });
 
-        return userOrders;
+        return allOrders;
     }
 
     public Order addOrder(Order order) {

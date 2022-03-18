@@ -19,7 +19,7 @@ public class WaterStonesURLParser implements StoreURLParser {
     private String storeName = "waterstones.com";
     public WebDriver driver;
 
-    public WaterStonesURLParser() {
+    private void driverConfig() {
         System.setProperty("webdriver.chrome.driver", chromedriverPath);
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -28,6 +28,7 @@ public class WaterStonesURLParser implements StoreURLParser {
 
     @Override
     public List<Product> checkLinks(List<Product> productsList) {
+        driverConfig();
         ArrayList<Product> validProducts = new ArrayList<>();
 
         for (Product product : productsList) {
@@ -36,7 +37,7 @@ public class WaterStonesURLParser implements StoreURLParser {
                 product.setPrice(price);
                 validProducts.add(product);
             } catch(Exception e) {
-                System.out.println("ERROR FROM WATERSTONES URL PARSER: " + e.getMessage());
+                System.out.println("WATERSTONES URL CHECK ERROR: " + e.getMessage());
                 continue;
             }
         }
