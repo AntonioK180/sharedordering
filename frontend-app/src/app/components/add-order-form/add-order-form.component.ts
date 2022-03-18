@@ -17,7 +17,12 @@ import { trigger } from '@angular/animations';
 	styleUrls: ['./add-order-form.component.css']
 })
 export class AddOrderFormComponent implements OnInit {
-	private urlRegex = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
+	private urlRegex = '^(https?:\\/\\/)?' + // protocol
+		'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+		'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+		'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+		'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+		'(\\#[-a-z\\d_]*)?$';
 	public moreThanOneInputs = false;
 	public errorText = "";
 	public orderForm = this.fb.group({
@@ -85,6 +90,16 @@ export class AddOrderFormComponent implements OnInit {
 
 	}
 
+	private allURLsValid(products: Product[]): boolean {
+		for (let product of products) {
+			if (product.id === -1) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public addNewOrder(): void {
 		let newOrder = this.getOrderFormValue();
 
@@ -93,11 +108,14 @@ export class AddOrderFormComponent implements OnInit {
 			storeName: this.orderForm.value['store']
 		}
 
-
 		this.seleniumService.checkLinks(productsDTO).subscribe(
-			(resposne: Array<Product>) => {
-				console.log(resposne);
-				newOrder.products = resposne;
+			(response: Array<Product>) => {
+				if (!this.allURLsValid(response)) {
+					this.errorText = "Some of the entered URLs are invalid.";
+					return;
+				}
+
+				newOrder.products = response;
 
 				this.orderService.addOrder(newOrder).subscribe(
 					(resposne: Order) => {
@@ -105,17 +123,19 @@ export class AddOrderFormComponent implements OnInit {
 						this.errorText = "";
 					},
 					(error: HttpErrorResponse) => {
+						console.log("ERROR RESPONSE: ");
 						console.log(error);
 					}
 				);
-
 			},
 			(error) => {
-				console.log(error);
-
 				switch (error.status) {
 					case 401:
 						this.errorText = "You need to be logged in!";
+						break;
+
+					case 406:
+						this.errorText = "SOme of the URLs you've entered aren't valid.";
 						break;
 				}
 			}
@@ -142,9 +162,14 @@ export class AddOrderFormComponent implements OnInit {
 		}
 
 		this.seleniumService.checkLinks(productsDTO).subscribe(
-			(resposne: Array<Product>) => {
-				newOrder.products = resposne;
-				let priceSum = this.calcSumPrice(resposne);
+			(response: Array<Product>) => {
+				if (!this.allURLsValid(response)) {
+					this.errorText = "Some of the entered URLs are invalid.";
+					return;
+				}
+
+				newOrder.products = response;
+				let priceSum = this.calcSumPrice(response);
 
 				this.triggerBackendPayment(priceSum, 'USD');
 
