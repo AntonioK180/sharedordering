@@ -7,6 +7,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SeleniumService } from 'src/app/services/selenium.service';
 import { Product } from 'src/app/interfaces/product';
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 
 @Component({
 	selector: 'app-add-order-form',
@@ -19,7 +20,7 @@ export class AddOrderFormComponent implements OnInit {
 	public errorText = "";
 	public orderForm = this.fb.group({
 		products: this.fb.array([new FormControl(null, [Validators.required, Validators.pattern(this.urlRegex)])]),
-		store: ['amazon', Validators.required]
+		store: ['amazon.com', Validators.required]
 	});
 	public allOrders: Order[] = [];
 
@@ -85,7 +86,13 @@ export class AddOrderFormComponent implements OnInit {
 	public addNewOrder(): void {
 		let newOrder = this.getOrderFormValue();
 
-		this.seleniumService.checkLinks(newOrder.products).subscribe(
+		let productsDTO = {
+			products: newOrder.products,
+			storeName: this.orderForm.value['store']
+		}
+
+
+		this.seleniumService.checkLinks(productsDTO).subscribe(
 			(resposne: Array<Product>) => {
 				console.log(resposne);
 				newOrder.products = resposne;
@@ -118,14 +125,18 @@ export class AddOrderFormComponent implements OnInit {
 		let newOrder = this.getOrderFormValue();
 		newOrder.id = existingOrder.id;
 
-		this.seleniumService.checkLinks(newOrder.products).subscribe(
+		let productsDTO = {
+			storeName: this.orderForm.value['store'],
+			products: newOrder.products
+		}
+
+		this.seleniumService.checkLinks(productsDTO).subscribe(
 			(resposne: Array<Product>) => {
 				newOrder.products = resposne;
 				this.orderService.updateOrder(newOrder).subscribe(
 					(response: Order) => {
 						console.log(response);
 					},
-
 					(error) => {
 						console.log(error);
 					}
@@ -140,10 +151,12 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		console.log(this.orderForm.controls['products'].valid);
 		// if (!this.orderForm.valid) {
 		// 	return;
 		// }
+
+		console.log("ALL ORDERS: ");
+		console.log(this.allOrders);
 
 		let potentialOrder = this.orderExists();
 

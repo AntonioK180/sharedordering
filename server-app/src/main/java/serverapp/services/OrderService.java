@@ -1,5 +1,6 @@
 package serverapp.services;
 
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serverapp.exceptions.OrderNotFoundException;
@@ -35,6 +36,7 @@ public class OrderService {
 
     public List<Order> getCurrentUserOrders() {
         List<Order> allOrders = getAllOrders();
+        List<Order> userOrders = new ArrayList<>();
         User currentUser = userService.getCurrentUser();
 
         allOrders.stream().forEach(order -> {
@@ -49,11 +51,12 @@ public class OrderService {
                 allOrders.remove(order);
             } else {
                 order.setProducts(userProducts);
+                userOrders.add(order);
             }
 
         });
 
-        return allOrders;
+        return userOrders;
     }
 
     public Order addOrder(Order order) {

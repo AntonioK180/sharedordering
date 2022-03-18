@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import serverapp.models.Order;
 import serverapp.models.Product;
 import serverapp.repositories.OrderRepo;
+import serverapp.selenium.ProductsValidationDTO;
 import serverapp.selenium.StoreURLParser;
 import serverapp.selenium.StoreURLParserBuilder;
 import serverapp.selenium.amazon.AmazonOrder;
@@ -45,12 +46,17 @@ public class SeleniumController {
     }
 
     @PostMapping
-    public ResponseEntity<List<Product>> checkURLs(@RequestBody List<Product> productList) {
+    public ResponseEntity<List<Product>> checkURLs(@RequestBody ProductsValidationDTO productsValidationDTO) {
+        List<Product> productList = productsValidationDTO.getProducts();
+        String storeName = productsValidationDTO.getStoreName();
+
+        System.out.println("PRODUCTS: " + productList);
+        System.out.println("STORE NAME: " + storeName);
 
         if (!productList.isEmpty()) {
             ArrayList<Product> invalidProductURLs = new ArrayList<>();
             ArrayList<Product> validProductURLs = new ArrayList<>();
-            StoreURLParser storeURLParser = storeURLParserBuilder.getURLParser(productList.get(0).retrieveStoreName());
+            StoreURLParser storeURLParser = storeURLParserBuilder.getURLParser(storeName);
 
             System.out.println("Store URL Parser: " + storeURLParser.getClass().toString());
 

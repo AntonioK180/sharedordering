@@ -17,8 +17,8 @@ export class SeleniumService {
 		return this.http.get<void>(SELENIUM_API + `/${storeName}/${orderId}`);
 	}
 
-	checkLinks(links: Array<Product>): Observable<Array<Product>> {
-		return this.http.post<Array<Product>>(SELENIUM_API, links, {
+	checkLinks(productsDTO: object): Observable<Array<Product>> {
+		return this.http.post<Array<Product>>(SELENIUM_API, productsDTO, {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json'
 			})
