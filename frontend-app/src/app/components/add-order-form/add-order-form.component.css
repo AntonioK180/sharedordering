@@ -42,3 +42,9 @@ form {
 .col:last-child {
   margin-right: 0;
 }
+
+#revolut-pay {
+  margin: auto;
+  margin-top: 2em;
+  width: 60%;
+}

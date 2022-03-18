@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Order } from 'src/app/interfaces/order';
 import { formatDate } from '@angular/common';
@@ -7,7 +7,9 @@ import { ProductService } from 'src/app/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SeleniumService } from 'src/app/services/selenium.service';
 import { Product } from 'src/app/interfaces/product';
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
+import RevolutCheckout from '@revolut/checkout';
+import { RevolutService } from 'src/app/services/revolut.service';
+import { trigger } from '@angular/animations';
 
 @Component({
 	selector: 'app-add-order-form',
@@ -15,7 +17,7 @@ import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality
 	styleUrls: ['./add-order-form.component.css']
 })
 export class AddOrderFormComponent implements OnInit {
-	private urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+	private urlRegex = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
 	public moreThanOneInputs = false;
 	public errorText = "";
 	public orderForm = this.fb.group({
@@ -24,7 +26,7 @@ export class AddOrderFormComponent implements OnInit {
 	});
 	public allOrders: Order[] = [];
 
-	constructor(private fb: FormBuilder, private orderService: OrderService, private productService: ProductService, private seleniumService: SeleniumService) { }
+	constructor(private fb: FormBuilder, private orderService: OrderService, private productService: ProductService, private seleniumService: SeleniumService, private revolutService: RevolutService) { }
 
 	public ngOnInit(): void {
 		this.getOrders();
@@ -121,6 +123,15 @@ export class AddOrderFormComponent implements OnInit {
 
 	}
 
+	private calcSumPrice(products: Product[]): number {
+		let priceSum = 0;
+		for (let product of products) {
+			priceSum += product.price;
+		}
+
+		return priceSum;
+	}
+
 	public updateExistingOrder(existingOrder: Order): void {
 		let newOrder = this.getOrderFormValue();
 		newOrder.id = existingOrder.id;
@@ -133,26 +144,65 @@ export class AddOrderFormComponent implements OnInit {
 		this.seleniumService.checkLinks(productsDTO).subscribe(
 			(resposne: Array<Product>) => {
 				newOrder.products = resposne;
+				let priceSum = this.calcSumPrice(resposne);
+
+				this.triggerBackendPayment(priceSum, 'USD');
+
 				this.orderService.updateOrder(newOrder).subscribe(
 					(response: Order) => {
-						console.log(response);
+
 					},
 					(error) => {
-						console.log(error);
+
 					}
 				);
 			},
+
 			(error) => {
-				console.log(error);
+				console.error(error);
 			}
 		);
 
 	}
 
+	public triggerBackendPayment(amount: number, currency: string) {
+		let revolutDTO = {
+			amount: amount,
+			currency: currency
+		}
+
+		this.revolutService.triggerBackendPayment(revolutDTO).subscribe(
+			(response) => {
+
+				RevolutCheckout(response.public_id, 'sandbox').then(function (instance) {
+					let element = document.getElementById('revolut-pay');
+
+					if (element !== null) {
+						instance.revolutPay({
+							target: element,
+							onSuccess() {
+								console.log('Payment completed')
+							},
+							onError(error) {
+								console.error('Payment failed: ' + error.message)
+							}
+						});
+					}
+
+				});
+
+
+			},
+			(error) => {
+				console.log("Error: " + error.message);
+			}
+		);
+	}
+
 	onSubmit(): void {
-		// if (!this.orderForm.valid) {
-		// 	return;
-		// }
+		if (!this.orderForm.valid) {
+			return;
+		}
 
 		console.log("ALL ORDERS: ");
 		console.log(this.allOrders);

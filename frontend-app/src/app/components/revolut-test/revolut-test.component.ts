@@ -68,22 +68,4 @@ export class RevolutTestComponent implements OnInit {
 		console.log("I will execute an order from Amazon!");
 	}
 
-
-	public triggerBackendPayment() {
-		console.log("triggered backend payment");
-		this.revolutService.triggerBackendPayment().subscribe(
-			(response) => {
-				console.log(response);
-				RevolutCheckout(response.public_id, 'prod').then((instance) => {
-					instance.payWithPopup();
-					// instance.createCardField()
-				})
-
-			},
-			(error) => {
-				console.log("Error: " + JSON.stringify(error));
-			}
-		);
-	}
-
 }

@@ -20,19 +20,9 @@ export class RevolutService {
 
 	constructor(private http: HttpClient) { }
 
-	createPayment(): Observable<any> {
+	triggerBackendPayment(revolutDTO: Object): Observable<any> {
 		return this.http.post(
-			REVOLUT_API + "/orders",
-			{
-				"amount": 5,
-				"currency": "GBP"
-			}
-		);
-	}
-
-	triggerBackendPayment(): Observable<any> {
-		return this.http.get(
-			BACKEND_REVOLUT
+			BACKEND_REVOLUT, revolutDTO
 		);
 	}
 

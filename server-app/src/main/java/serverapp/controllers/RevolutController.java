@@ -4,9 +4,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.*;
@@ -17,23 +15,22 @@ import springfox.documentation.spring.web.json.Json;
 @RequestMapping("/api/v1/revolut")
 public class RevolutController {
 
-    private final String bearerToken = "sk_nxFIfOdfuHqOE2wUbcja6MkeI1FoFOFjpH5sLlrv070l0CCZJx_l0oNTZTrus8hR";
+    private final String bearerToken = "sk__oXD-qbGSo6TiOIQKFka1X7k4ueZhuAXJ_rThdeuT9bg9iB-MJOj06hdtM7s3WpM";
 
-    @GetMapping
-    public ResponseEntity<Object> initiatePayment() {
+    @PostMapping
+    public ResponseEntity<Object> initiatePayment(@RequestBody RevolutDTO revolutDTO) {
         WebClient.Builder builder = WebClient.builder();
-        LinkedMultiValueMap map = new LinkedMultiValueMap();
-        map.add("amount", 5);
-        map.add("currency", "USD");
 
+        int amount = revolutDTO.getAmount();
+        String currency = revolutDTO.getCurrency();
+
+        System.out.println("AMOUNT: " + amount +
+                "\nCURRENCY: " + currency);
 
         ResponseSpec retrieve = builder.build()
                 .post()
-                .uri("https://merchant.revolut.com/api/1.0/orders")
-                .bodyValue("{\n" +
-                        "    \"amount\": 5,\n" +
-                        "    \"currency\": \"USD\"\n" +
-                        "}")
+                .uri("https://sandbox-merchant.revolut.com/api/1.0/orders")
+                .bodyValue("{\"amount\": " + amount + ", \"currency\": \"" + currency + "\"}")
                 .header("Authorization", "Bearer " + bearerToken )
                 .retrieve();
 
