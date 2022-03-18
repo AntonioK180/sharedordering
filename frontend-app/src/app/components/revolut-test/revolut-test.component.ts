@@ -4,6 +4,7 @@ import { Order } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
 import { RevolutService } from 'src/app/services/revolut.service';
 import { SeleniumService } from 'src/app/services/selenium.service';
+import RevolutCheckout from '@revolut/checkout';
 
 @Component({
 	selector: 'app-revolut-test',
@@ -68,24 +69,16 @@ export class RevolutTestComponent implements OnInit {
 	}
 
 
-	public initPayment() {
-		console.log('GO GO GO GO');
-
-		this.revolutService.createPayment().subscribe(
-			(response) => {
-				console.log(response);
-			},
-			(error) => {
-				console.log("Error: " + JSON.stringify(error));
-			}
-		);
-	}
-
 	public triggerBackendPayment() {
 		console.log("triggered backend payment");
 		this.revolutService.triggerBackendPayment().subscribe(
 			(response) => {
-				console.log("Response: " + JSON.stringify(response));
+				console.log(response);
+				RevolutCheckout(response.public_id, 'prod').then((instance) => {
+					instance.payWithPopup();
+					// instance.createCardField()
+				})
+
 			},
 			(error) => {
 				console.log("Error: " + JSON.stringify(error));

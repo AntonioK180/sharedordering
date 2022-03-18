@@ -1,6 +1,7 @@
 package serverapp.controllers;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,14 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.*;
+import springfox.documentation.spring.web.json.Json;
 
 
 @RestController
 @RequestMapping("/api/v1/revolut")
 public class RevolutController {
 
+    private final String bearerToken = "sk_nxFIfOdfuHqOE2wUbcja6MkeI1FoFOFjpH5sLlrv070l0CCZJx_l0oNTZTrus8hR";
+
     @GetMapping
-    public void initiatePayment() {
+    public ResponseEntity<Object> initiatePayment() {
         WebClient.Builder builder = WebClient.builder();
         LinkedMultiValueMap map = new LinkedMultiValueMap();
         map.add("amount", 5);
@@ -30,12 +34,15 @@ public class RevolutController {
                         "    \"amount\": 5,\n" +
                         "    \"currency\": \"USD\"\n" +
                         "}")
-                .header("Authorization", "Bearer sk_nxFIfOdfuHqOE2wUbcja6MkeI1FoFOFjpH5sLlrv070l0CCZJx_l0oNTZTrus8hR" )
+                .header("Authorization", "Bearer " + bearerToken )
                 .retrieve();
 
-        System.out.println(retrieve.bodyToMono(String.class).block());
+        Object response = retrieve.bodyToMono(Object.class).block();
+        System.out.println(response);
 
         System.out.println("I am calling the Revolut API!");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

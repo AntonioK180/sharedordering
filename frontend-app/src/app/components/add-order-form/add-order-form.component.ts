@@ -147,7 +147,6 @@ export class AddOrderFormComponent implements OnInit {
 			}
 		);
 
-
 	}
 
 	onSubmit(): void {
