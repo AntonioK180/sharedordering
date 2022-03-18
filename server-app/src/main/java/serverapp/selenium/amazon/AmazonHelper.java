@@ -37,18 +37,20 @@ public class AmazonHelper {
         driver.findElement(By.id("signInSubmit")).click();
     }
 
-    private double getPrice() throws Exception {
-        WebElement price = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[9]/div[6]/div[1]/div[4]/div/div/div/div/div/form/div/div/div/div/div[1]/div[1]/div/div[1]/div/span/span[2]"));
-
+    public double getPrice() throws Exception {
+        WebElement price = driver.findElement(By.cssSelector("#corePrice_feature_div > div > span > span:nth-child(2)"));
         String priceString = price.getText().substring(1);
 
         return Double.parseDouble(priceString);
     }
 
-    public double visitItem(String url) throws Exception {
-        driver.navigate().to(url);
+    public String getDisplayName() throws Exception {
+        WebElement name = driver.findElement(By.cssSelector("#productTitle"));
+        return name.getText();
+    }
 
-        return getPrice();
+    public void visitItem(String url)  {
+        driver.navigate().to(url);
     }
 
     public void addToCart(String url) {

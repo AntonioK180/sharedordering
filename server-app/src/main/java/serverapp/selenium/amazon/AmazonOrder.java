@@ -64,7 +64,8 @@ public class AmazonOrder {
 
         for (Product product : linkList) {
             try {
-                double price = amazon.visitItem(product.getUrl());
+                amazon.visitItem(product.getUrl());
+                double price = amazon.getPrice();
 
                 System.out.println("Item costs: " + price);
 
