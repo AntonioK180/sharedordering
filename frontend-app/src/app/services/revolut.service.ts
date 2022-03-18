@@ -9,7 +9,7 @@ const BACKEND_REVOLUT = environment.apiBaseUrl + '/api/v1/revolut'
 const httpOptions = {
 	headers: new HttpHeaders({
 		'Content-Type': 'application/json',
-		'Authentication': 'Bearer ' + 'sk_IHwOxXkZKSThJTEc7XWq2ubjFg-PnJZz5lxTuvD1ZPku1yfIDx1kLI94nN8QnuoM'
+		'Authorization': 'Bearer ' + 'sk_nxFIfOdfuHqOE2wUbcja6MkeI1FoFOFjpH5sLlrv070l0CCZJx_l0oNTZTrus8hR'
 	})
 };
 

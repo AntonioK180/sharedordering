@@ -13,14 +13,16 @@ import org.springframework.stereotype.Service;
 //@Component
 public class WaterstonesHelper {
 
-    private String email_value = " ";
-    private String password_value = " ";
+//    @Value("${waterstones.email}")
+    private String email_value = "";
+//    @Value("${waterstones.password}")
+    private String password_value;
 
 
     private String startUrl = "https://www.waterstones.com/";
     private WebDriver driver;
 
-
+//    @Autowired
     public WaterstonesHelper(WebDriver driver) {
         this.driver = driver;
     }

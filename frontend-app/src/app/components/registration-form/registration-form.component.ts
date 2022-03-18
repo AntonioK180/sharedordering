@@ -30,7 +30,7 @@ export class RegistrationFormComponent {
 		this.authService.register(email, password).subscribe(
 			(response) => {
 				this.isSignUpFailed = false;
-				console.log("API answer: " + JSON.stringify(response));
+				// navigate to login page
 			},
 			(err) => {
 				this.isSignUpFailed = true;

@@ -3,13 +3,16 @@ package serverapp.selenium.waterstones;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import serverapp.models.Product;
+import serverapp.services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WaterstonesOrder {
+//    private ProductService productService = new ProductService();
 
     private WaterstonesHelper waterstonesHelper;
 
@@ -42,7 +45,9 @@ public class WaterstonesOrder {
         for (Product product : productsList) {
             try {
                 double price = waterstonesHelper.visitItem(product.getUrl());
+                System.out.println("PRICE IS: " + price);
                 product.setPrice(price);
+//                productService.updateProduct(product.getId(), product);
                 validProducts.add(product);
             } catch(Exception e) {
                 System.out.println("ERROR FROM ME: " + e.getMessage());

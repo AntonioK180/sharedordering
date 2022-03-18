@@ -31,6 +31,7 @@ import { RevolutTestComponent } from './components/revolut-test/revolut-test.com
 import { HeroLandingComponent } from './components/hero-landing/hero-landing.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
+import { ResponsePopupComponent } from './components/response-popup/response-popup.component';
 
 @NgModule({
 	declarations: [
@@ -41,12 +42,13 @@ import { SingleProductComponent } from './components/single-product/single-produ
 		AvailableStoresComponent,
 		RegistrationFormComponent,
 		LoginFormComponent,
-  ViewOrdersComponent,
-  SingleOrderComponent,
-  RevolutTestComponent,
-  HeroLandingComponent,
-  MyProfileComponent,
-  SingleProductComponent
+		ViewOrdersComponent,
+		SingleOrderComponent,
+		RevolutTestComponent,
+		HeroLandingComponent,
+		MyProfileComponent,
+		SingleProductComponent,
+		ResponsePopupComponent
 	],
 	imports: [
 		BrowserModule,

@@ -1,11 +1,45 @@
-.main-container {
+.hero-landing {
 	width: 60%;
 	margin: auto;
+	background-color: #c2185b;
+	margin-top: 3em;
+	padding: 0.5em;
 }
 
-.image-section {
-	margin-top: 20px;
-	background-image: url("https://media.istockphoto.com/photos/women-shopping-online-during-christmas-picture-id872895008?k=20&m=872895008&s=612x612&w=0&h=-faXrTYn_G9Nxd2vMe1SpF6qvt6hOz0jPBeKA8cbvr4=");
-	background-repeat: no-repeat;
-	background-size: auto;
+.cta-buttons {
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	width: 80%;
+}
+
+.cta-button {
+	margin: 3em;
+	padding: 1.5em 3em 1.5em 3em;
+	max-width: 15em;
+	overflow: hidden;
+}
+
+
+.text-image {
+	position: relative;
+	text-align: center;
+	color: white;
+}
+
+.cta-copy {
+	color: black;
+	position: absolute;
+	font-size: medium;
+	font-weight: bold;
+	bottom: 2em;
+	text-align: center;
+	width: 100%;
+}
+
+.cta-image {
+	max-width: 100%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }

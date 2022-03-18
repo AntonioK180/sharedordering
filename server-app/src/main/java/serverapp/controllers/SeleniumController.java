@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import serverapp.models.Order;
 import serverapp.models.Product;
 import serverapp.repositories.OrderRepo;
+import serverapp.selenium.StoreURLParser;
+import serverapp.selenium.StoreURLParserBuilder;
 import serverapp.selenium.amazon.AmazonOrder;
 import serverapp.selenium.waterstones.WaterstonesOrder;
 import serverapp.services.OrderService;
+import serverapp.services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +23,15 @@ import java.util.List;
 public class SeleniumController {
     WaterstonesOrder waterstonesOrder = new WaterstonesOrder();
     AmazonOrder amazonOrder = new AmazonOrder();
+    StoreURLParserBuilder storeURLParserBuilder = new StoreURLParserBuilder();
+
     private final OrderService orderService;
+    private final ProductService productService;
 
     @Autowired
-    public SeleniumController(OrderService orderService) {
+    public SeleniumController(OrderService orderService, ProductService productService) {
         this.orderService = orderService;
+        this.productService = productService;
     }
 
     @GetMapping("waterstones/{id}")
@@ -39,46 +46,36 @@ public class SeleniumController {
 
     @PostMapping
     public ResponseEntity<List<Product>> checkURLs(@RequestBody List<Product> productList) {
-        ArrayList<Product> amazonLinks = new ArrayList<>();
-        ArrayList<Product> waterstonesLinks = new ArrayList<>();
-        ArrayList<Product> invalidProductURLs = new ArrayList<>();
 
-        for (Product product : productList) {
-             if (product.retrieveStoreName().equals(waterstonesOrder.getStoreName())) {
-                waterstonesLinks.add(product);
-            } else if (product.retrieveStoreName().equals(amazonOrder.getStoreName())) {
-                amazonLinks.add(product);
-             } else {
-                 invalidProductURLs.add(product);
-             }
+        if (!productList.isEmpty()) {
+            ArrayList<Product> invalidProductURLs = new ArrayList<>();
+            ArrayList<Product> validProductURLs = new ArrayList<>();
+            StoreURLParser storeURLParser = storeURLParserBuilder.getURLParser(productList.get(0).retrieveStoreName());
+
+            System.out.println("Store URL Parser: " + storeURLParser.getClass().toString());
+
+            for (Product product : productList) {
+                if (!product.retrieveStoreName().equals(storeURLParser.getStoreName())) {
+                    invalidProductURLs.add(product);
+                } else {
+                    validProductURLs.add(product);
+                }
+            }
+
+            if (!invalidProductURLs.isEmpty()) {
+                invalidProductURLs.stream().forEach(
+                        product -> {
+                            product.setId((long) -1);
+                        }
+                );
+                return new ResponseEntity<>(invalidProductURLs, HttpStatus.OK);
+            } else if (!validProductURLs.isEmpty()) {
+                validProductURLs = (ArrayList<Product>) storeURLParser.checkLinks(validProductURLs);
+                return new ResponseEntity<>(validProductURLs, HttpStatus.OK);
+            }
         }
 
-        if (!invalidProductURLs.isEmpty()) {
-            invalidProductURLs.stream().forEach(
-                    product -> {
-                        product.setId((long) -1);
-                    }
-            );
-            return new ResponseEntity<>(invalidProductURLs, HttpStatus.OK);
-        }
-
-        if (!amazonLinks.isEmpty()) {
-            ArrayList<Product> validProducts = (ArrayList<Product>) amazonOrder.checkLinks(amazonLinks);
-            System.out.println("I AM CHECKING from amazon!");
-            amazonOrder.checkLinks(amazonLinks);
-        }
-
-        if (!waterstonesLinks.isEmpty()) {
-            ArrayList<Product> validProducts = (ArrayList<Product>) waterstonesOrder.checkLinks(waterstonesLinks);
-
-            validProducts.stream().forEach(product -> {
-                System.out.println("Price: " + product.getPrice());
-            });
-
-            return new ResponseEntity<>(validProducts, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(amazonLinks, HttpStatus.OK);
+        return null;
     }
 
 }

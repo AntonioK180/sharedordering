@@ -1,5 +1,7 @@
 package serverapp;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -31,4 +33,10 @@ public class ServerAppApplication {
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
+
+//	@Bean
+//	public WebDriver webDriver() {
+//		return new ChromeDriver();
+//	}
+
 }
