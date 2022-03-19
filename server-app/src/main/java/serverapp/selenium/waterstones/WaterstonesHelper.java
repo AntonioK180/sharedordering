@@ -103,7 +103,6 @@ public class WaterstonesHelper {
 
         driver.findElement(By.xpath("//input[@value='Next: Payment']")).click();
 
-        driver.findElement(By.id("creditCardTitle")).click();
     }
 
 }
