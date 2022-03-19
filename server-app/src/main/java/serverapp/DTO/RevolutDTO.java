@@ -1,4 +1,4 @@
-package serverapp.controllers;
+package serverapp.DTO;
 
 public class RevolutDTO {
     private int amount;

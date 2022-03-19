@@ -5,10 +5,7 @@ import serverapp.models.authentication.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -93,5 +90,4 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
 }

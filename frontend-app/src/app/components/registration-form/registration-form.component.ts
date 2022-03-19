@@ -27,15 +27,16 @@ export class RegistrationFormComponent {
 
 		let email = this.registrationForm.value['email'];
 		let password = this.registrationForm.value['password'];
+		let roles = ['user'];
 
-		this.authService.register(email, password).subscribe(
+		this.authService.register(email, password, roles).subscribe(
 			() => {
 				this.isSignUpFailed = false;
 				this.router.navigate(['/login']);
 			},
 			(error) => {
 				this.isSignUpFailed = true;
-				console.log(error.error);
+				console.log(error);
 				switch (error.error) {
 					case "Error: rawPassword cannot be null":
 						this.errorText = "Password cannot be empty!";

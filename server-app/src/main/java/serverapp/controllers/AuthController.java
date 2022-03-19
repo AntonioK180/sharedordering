@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import serverapp.DTO.UserRegistrationDTO;
 import serverapp.models.User;
 import serverapp.models.authentication.ERole;
 import serverapp.models.authentication.Role;
@@ -20,10 +21,7 @@ import serverapp.security.jwt.JwtResponse;
 import serverapp.security.jwt.JwtUtils;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -66,11 +64,13 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User unregisteredUser) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO unregisteredUser) {
 
         if (userRepository.existsByUsername(unregisteredUser.getUsername())) {
             return new ResponseEntity<>("Error: Email is already in use!", HttpStatus.BAD_REQUEST);
         }
+
+        System.out.println("USER ROLE: " + unregisteredUser.getRoles());
 
         User user = new User();
 
@@ -81,7 +81,7 @@ public class AuthController {
             return new ResponseEntity<>("Error: " + iae.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        Set<String> strRoles = Collections.singleton("mod");
+        List<String> strRoles = unregisteredUser.getRoles();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {

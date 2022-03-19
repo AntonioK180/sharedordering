@@ -33,7 +33,7 @@ export class LoginFormComponent {
 				this.tokenStorage.saveUser(response);
 
 				// Relocate this way so that the navbar gets updated too.
-				window.location.replace('/allorders');
+				window.location.replace('/neworder');
 			},
 			(error) => {
 				console.log(error.error);

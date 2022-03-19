@@ -23,10 +23,11 @@ export class AuthService {
 		}, httpOptions);
 	}
 
-	register(username: string, password: string): Observable<any> {
+	register(username: string, password: string, roles: string[]): Observable<any> {
 		return this.http.post(AUTH_API + 'signup', {
 			username,
-			password
+			password,
+			roles
 		});
 	}
 }
