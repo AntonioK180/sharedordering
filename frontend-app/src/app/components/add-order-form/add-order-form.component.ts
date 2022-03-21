@@ -17,16 +17,10 @@ import { trigger } from '@angular/animations';
 	styleUrls: ['./add-order-form.component.css']
 })
 export class AddOrderFormComponent implements OnInit {
-	private urlRegex = '^(https?:\\/\\/)?' + // protocol
-		'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-		'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-		'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-		'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-		'(\\#[-a-z\\d_]*)?$';
 	public moreThanOneInputs = false;
 	public errorText = "";
 	public orderForm = this.fb.group({
-		products: this.fb.array([new FormControl(null, [Validators.required, Validators.pattern(this.urlRegex)])]),
+		products: this.fb.array([new FormControl(null, Validators.required)]),
 		store: ['amazon.com', Validators.required]
 	});
 	public allOrders: Order[] = [];
@@ -55,7 +49,7 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	public addProduct() {
-		this.products().push(new FormControl(null, [Validators.required, Validators.pattern(this.urlRegex)]));
+		this.products().push(new FormControl(null, [Validators.required]));
 	}
 
 	public removeProduct(index: number) {
@@ -90,14 +84,23 @@ export class AddOrderFormComponent implements OnInit {
 
 	}
 
-	private allURLsValid(products: Product[]): boolean {
+	private allURLsValid(products: Product[]): string[] {
+		let invalidURLs = [];
 		for (let product of products) {
 			if (product.id === -1) {
-				return false;
+				invalidURLs.push(product.url);
 			}
 		}
 
-		return true;
+		let allProducts = this.products();
+		for (let productInput of allProducts.controls) {
+			if (invalidURLs.includes(productInput.value)) {
+				productInput.setErrors({ urlInValid: 'true' });
+				console.log(productInput.value);
+			}
+		}
+
+		return invalidURLs;
 	}
 
 	public addNewOrder(): void {
@@ -110,8 +113,8 @@ export class AddOrderFormComponent implements OnInit {
 
 		this.seleniumService.checkLinks(productsDTO).subscribe(
 			(response: Array<Product>) => {
-				if (!this.allURLsValid(response)) {
-					this.errorText = "Some of the entered URLs are invalid.";
+				let invalidProducts = this.allURLsValid(response);
+				if (invalidProducts.length !== 0 || response.length === 0) {
 					return;
 				}
 
@@ -135,10 +138,6 @@ export class AddOrderFormComponent implements OnInit {
 				switch (error.status) {
 					case 401:
 						this.errorText = "You need to be logged in!";
-						break;
-
-					case 406:
-						this.errorText = "SOme of the URLs you've entered aren't valid.";
 						break;
 				}
 			}
@@ -166,15 +165,13 @@ export class AddOrderFormComponent implements OnInit {
 
 		this.seleniumService.checkLinks(productsDTO).subscribe(
 			(response: Array<Product>) => {
-				if (!this.allURLsValid(response) || response.length === 0) {
-					this.errorText = "Some of the entered URLs are invalid.";
+				this.errorText = "";
+				let invalidProducts = this.allURLsValid(response);
+				if (invalidProducts.length !== 0 || response.length === 0) {
 					return;
 				}
 
 				newOrder.products = response;
-
-				console.log("NEW ORDER PRODUCTS: ");
-				console.log(newOrder.products);
 
 				let priceSum = this.calcSumPrice(response);
 
@@ -194,6 +191,14 @@ export class AddOrderFormComponent implements OnInit {
 				console.error(error);
 			}
 		);
+
+	}
+
+	public clearReolvutField(): void {
+		let element = document.getElementById('revolut-pay');
+		if (element !== null) {
+			element.innerHTML = "";
+		}
 
 	}
 
@@ -235,13 +240,10 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-
-		// if (!this.orderForm.valid) {
-		// 	return;
-		// }
-
-		console.log("ALL ORDERS: ");
-		console.log(this.allOrders);
+		this.clearReolvutField();
+		if (!this.orderForm.valid) {
+			return;
+		}
 
 		let potentialOrder = this.orderExists();
 

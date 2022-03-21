@@ -33,14 +33,16 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    //    @OneToMany(mappedBy = "user")
-    //    private List<Product> userProducts;
+    @OneToMany(mappedBy = "user")
+    private List<Product> userProducts;
 
     public User() {}
 
-    public User(String username, String password) {
+    public User(String firstName, String lastName, String username, String password) {
         this.username = username;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -89,5 +91,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Product> getUserProducts() {
+        return userProducts;
+    }
+
+    public void setUserProducts(List<Product> userProducts) {
+        this.userProducts = userProducts;
     }
 }

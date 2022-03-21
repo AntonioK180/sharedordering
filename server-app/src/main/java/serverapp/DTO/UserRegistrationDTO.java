@@ -6,6 +6,8 @@ import java.util.List;
 public class UserRegistrationDTO {
     String username;
     String password;
+    String firstName;
+    String lastName;
     List<String> roles;
 
     public String getUsername() {
@@ -22,6 +24,22 @@ public class UserRegistrationDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<String> getRoles() {

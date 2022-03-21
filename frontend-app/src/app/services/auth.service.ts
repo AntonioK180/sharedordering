@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/user';
 
 const AUTH_API = environment.apiBaseUrl + '/api/auth/';
 
@@ -23,12 +24,8 @@ export class AuthService {
 		}, httpOptions);
 	}
 
-	register(username: string, password: string, roles: string[]): Observable<any> {
-		return this.http.post(AUTH_API + 'signup', {
-			username,
-			password,
-			roles
-		});
+	register(user: User): Observable<any> {
+		return this.http.post(AUTH_API + 'signup', user);
 	}
 }
 

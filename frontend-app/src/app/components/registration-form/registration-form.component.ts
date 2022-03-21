@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class RegistrationFormComponent {
 	public errorText = "";
 
 	registrationForm = this.fb.group({
-		name: [null, Validators.required],
+		firstName: [null, Validators.required],
+		lastName: [null, Validators.required],
 		email: [null, [Validators.required, Validators.email]],
 		password: [null, [Validators.required, Validators.minLength(6)]],
 	});
@@ -25,11 +27,15 @@ export class RegistrationFormComponent {
 			return;
 		}
 
-		let email = this.registrationForm.value['email'];
-		let password = this.registrationForm.value['password'];
-		let roles = ['user'];
+		let user: User = {
+			username: this.registrationForm.value['email'],
+			firstName: this.registrationForm.value['firstName'],
+			lastName: this.registrationForm.value['lastName'],
+			password: this.registrationForm.value['password'],
+			roles: ['user']
+		}
 
-		this.authService.register(email, password, roles).subscribe(
+		this.authService.register(user).subscribe(
 			() => {
 				this.isSignUpFailed = false;
 				this.router.navigate(['/login']);

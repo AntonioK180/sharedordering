@@ -10,7 +10,9 @@ import serverapp.models.User;
 import serverapp.repositories.OrderRepo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OrderService {
@@ -36,17 +38,34 @@ public class OrderService {
 
     public List<Order> getCurrentUserOrders() {
         User currentUser = userService.getCurrentUser();
-        List<Order> allOrders = getAllOrders();
-        List<Order> userOrders = new ArrayList<>();
+        Set<Order> userOrders = new HashSet<>();
+        List<Product> userProducts = currentUser.getUserProducts();
+        userProducts.forEach(product -> {
+            userOrders.add(product.getOrder());
+        });
 
-        allOrders.forEach(order -> {
-            List<Product> userProducts = new ArrayList<>();
-            List<Product> orderProducts = order.getProducts();
-            orderProducts.forEach(product -> {
-                if (product.getUser().getId() == currentUser.getId()) {
-                    userProducts.add(product);
+        userOrders.forEach(order -> {
+            List<Product> thisOrderUserProducts = new ArrayList<>();
+            userProducts.forEach(product -> {
+                if(order.getProducts().contains(product)) {
+                    thisOrderUserProducts.add(product);
                 }
             });
+            order.setProducts(thisOrderUserProducts);
+        });
+
+        List<Order> ordersToReturn = new ArrayList<>(userOrders);
+
+
+
+//        allOrders.forEach(order -> {
+//            List<Product> userProducts = new ArrayList<>();
+//            List<Product> orderProducts = order.getProducts();
+//            orderProducts.forEach(product -> {
+//                if (product.getUser().getId() == currentUser.getId()) {
+//                    userProducts.add(product);
+//                }
+//            });
 
 //            if (userProducts.isEmpty()) {
 //                allOrders.remove(order);
@@ -55,9 +74,9 @@ public class OrderService {
 //                userOrders.add(order);
 //            }
 
-        });
+//        });
 
-        return allOrders;
+        return ordersToReturn;
     }
 
     public Order addOrder(Order order) {

@@ -26,7 +26,7 @@ public class AmazonURLParser implements StoreURLParser {
     @Override
     public List<Product> checkLinks(List<Product> productsList) {
         driverConfig();
-        ArrayList<Product> validProducts = new ArrayList<>();
+        ArrayList<Product> checkedProducts = new ArrayList<>();
 
         amazonHelper.goToHomePage();
 
@@ -37,17 +37,18 @@ public class AmazonURLParser implements StoreURLParser {
                 String displayName = amazonHelper.getDisplayName();
                 product.setPrice(price);
                 product.setDisplayName(displayName);
-                validProducts.add(product);
+                checkedProducts.add(product);
             } catch(Exception e) {
                 System.out.println("AMAZON URL CHECK ERROR: " + e.getMessage());
-                continue;
+                product.setId((long) -1);
+                checkedProducts.add(product);
             }
 
         }
 
         driver.close();
 
-        return validProducts;
+        return checkedProducts;
     }
 
     @Override

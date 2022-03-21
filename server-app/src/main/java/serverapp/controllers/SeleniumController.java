@@ -57,14 +57,14 @@ public class SeleniumController {
 
         if (!productList.isEmpty()) {
             ArrayList<Product> invalidProductURLs = new ArrayList<>();
-            ArrayList<Product> validProductURLs = new ArrayList<>();
+            ArrayList<Product> toBeCheckedProducts = new ArrayList<>();
             StoreURLParser storeURLParser = storeURLParserBuilder.getURLParser(storeName);
 
             for (Product product : productList) {
                 if (!product.retrieveStoreName().equals(storeURLParser.getStoreName())) {
                     invalidProductURLs.add(product);
                 } else {
-                    validProductURLs.add(product);
+                    toBeCheckedProducts.add(product);
                 }
             }
 
@@ -76,9 +76,9 @@ public class SeleniumController {
                 );
                 return new ResponseEntity<>(invalidProductURLs, HttpStatus.OK);
 
-            } else if (!validProductURLs.isEmpty()) {
-                validProductURLs = (ArrayList<Product>) storeURLParser.checkLinks(validProductURLs);
-                return new ResponseEntity<>(validProductURLs, HttpStatus.OK);
+            } else if (!toBeCheckedProducts.isEmpty()) {
+                List<Product> checkedProducts = storeURLParser.checkLinks(toBeCheckedProducts);
+                return new ResponseEntity<>(checkedProducts, HttpStatus.OK);
             }
         }
 

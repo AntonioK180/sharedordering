@@ -77,6 +77,8 @@ public class AuthController {
         try {
             user.setUsername(unregisteredUser.getUsername());
             user.setPassword(encoder.encode(unregisteredUser.getPassword()));
+            user.setFirstName(unregisteredUser.getFirstName());
+            user.setLastName(unregisteredUser.getLastName());
         } catch(IllegalArgumentException iae) {
             return new ResponseEntity<>("Error: " + iae.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -29,7 +29,7 @@ public class WaterStonesURLParser implements StoreURLParser {
     @Override
     public List<Product> checkLinks(List<Product> productsList) {
         driverConfig();
-        ArrayList<Product> validProducts = new ArrayList<>();
+        ArrayList<Product> checkedProducts = new ArrayList<>();
 
         for (Product product : productsList) {
             try {
@@ -38,16 +38,17 @@ public class WaterStonesURLParser implements StoreURLParser {
                 String displayName = waterstonesHelper.getDisplayName();
                 product.setPrice(price);
                 product.setDisplayName(displayName);
-                validProducts.add(product);
+                checkedProducts.add(product);
             } catch(Exception e) {
                 System.out.println("WATERSTONES URL CHECK ERROR: " + e.getMessage());
-                continue;
+                product.setId((long) -1);
+                checkedProducts.add(product);
             }
         }
 
         driver.close();
 
-        return validProducts;
+        return checkedProducts;
     }
 
 
