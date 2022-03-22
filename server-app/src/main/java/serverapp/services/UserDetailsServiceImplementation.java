@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import serverapp.models.User;
-import serverapp.models.authentication.UserDetailsImplementation;
 import serverapp.repositories.UserRepo;
 
 @Service
@@ -21,7 +20,7 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
-        return UserDetailsImplementation.build(user);
+        return user;
     }
 
 

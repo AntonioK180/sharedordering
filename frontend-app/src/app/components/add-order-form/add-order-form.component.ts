@@ -69,6 +69,7 @@ export class AddOrderFormComponent implements OnInit {
 		return newOrder;
 	}
 
+	// В сървиса да направя нов гет, който да взима по storeName
 	private orderExists(): Order | false {
 		this.getOrders();
 		console.log(this.allOrders);
@@ -119,9 +120,9 @@ export class AddOrderFormComponent implements OnInit {
 				}
 
 				let priceSum = this.calcSumPrice(response);
-				this.triggerBackendPayment(priceSum, 'USD');
-
 				newOrder.products = response;
+
+				this.triggerBackendPayment(priceSum, 'USD');
 
 				this.orderService.addOrder(newOrder).subscribe(
 					(resposne: Order) => {
@@ -207,8 +208,6 @@ export class AddOrderFormComponent implements OnInit {
 			amount: amount * 100,
 			currency: currency
 		}
-
-
 
 		this.revolutService.triggerBackendPayment(revolutDTO).subscribe(
 			(response) => {

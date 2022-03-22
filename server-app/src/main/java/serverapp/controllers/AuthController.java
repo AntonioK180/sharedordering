@@ -1,6 +1,5 @@
 package serverapp.controllers;
 
-import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import serverapp.DTO.UserRegistrationDTO;
 import serverapp.models.User;
 import serverapp.models.authentication.ERole;
 import serverapp.models.authentication.Role;
-import serverapp.models.authentication.UserDetailsImplementation;
 import serverapp.repositories.RoleRepo;
 import serverapp.repositories.UserRepo;
 import serverapp.security.jwt.JwtResponse;
@@ -52,7 +50,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImplementation userDetails = (UserDetailsImplementation) authentication.getPrincipal();
+        User userDetails = (User) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
