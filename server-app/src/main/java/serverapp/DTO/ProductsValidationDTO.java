@@ -1,4 +1,4 @@
-package serverapp.selenium;
+package serverapp.DTO;
 
 import serverapp.models.Product;
 
@@ -8,7 +8,6 @@ public class ProductsValidationDTO {
 
     private String storeName;
     private List<Product> products;
-
 
     public String getStoreName() {
         return storeName;

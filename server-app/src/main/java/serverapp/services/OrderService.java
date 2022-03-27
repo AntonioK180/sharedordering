@@ -1,6 +1,5 @@
 package serverapp.services;
 
-import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serverapp.exceptions.OrderNotFoundException;
@@ -55,26 +54,6 @@ public class OrderService {
         });
 
         List<Order> ordersToReturn = new ArrayList<>(userOrders);
-
-
-
-//        allOrders.forEach(order -> {
-//            List<Product> userProducts = new ArrayList<>();
-//            List<Product> orderProducts = order.getProducts();
-//            orderProducts.forEach(product -> {
-//                if (product.getUser().getId() == currentUser.getId()) {
-//                    userProducts.add(product);
-//                }
-//            });
-
-//            if (userProducts.isEmpty()) {
-//                allOrders.remove(order);
-//            } else {
-//                order.setProducts(userProducts);
-//                userOrders.add(order);
-//            }
-
-//        });
 
         return ordersToReturn;
     }

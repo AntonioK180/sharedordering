@@ -1,8 +1,8 @@
 package serverapp.controllers;
 
-import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import serverapp.models.Order;
@@ -20,8 +20,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping // protected - admin only requests
-    @RolesAllowed("mod")
+    @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.getAllOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
@@ -53,9 +52,9 @@ public class OrderController {
         return new ResponseEntity<>(updatedOrder, HttpStatus.CREATED);
     }
 
-
-    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
+    @DeleteMapping("/{id}")
     public ResponseEntity<Order> deletedOrder(@PathVariable("id") Long id) {
         orderService.deleteOrder(id);
         return new ResponseEntity<>(HttpStatus.OK);

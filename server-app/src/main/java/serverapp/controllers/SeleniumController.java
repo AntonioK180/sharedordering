@@ -3,10 +3,11 @@ package serverapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import serverapp.models.Order;
 import serverapp.models.Product;
-import serverapp.selenium.ProductsValidationDTO;
+import serverapp.DTO.ProductsValidationDTO;
 import serverapp.selenium.StoreURLParser;
 import serverapp.selenium.StoreURLParserBuilder;
 import serverapp.selenium.amazon.AmazonOrder;
@@ -31,6 +32,7 @@ public class SeleniumController {
         this.productService = productService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Order> executeOrder(@PathVariable("id") Long id) {
         Order orderToExecute = orderService.getOrderById(id);

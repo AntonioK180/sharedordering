@@ -68,8 +68,6 @@ public class AuthController {
             return new ResponseEntity<>("Error: Email is already in use!", HttpStatus.BAD_REQUEST);
         }
 
-        System.out.println("USER ROLE: " + unregisteredUser.getRoles());
-
         User user = new User();
 
         try {

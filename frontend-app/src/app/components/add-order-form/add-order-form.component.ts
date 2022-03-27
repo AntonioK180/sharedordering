@@ -69,7 +69,6 @@ export class AddOrderFormComponent implements OnInit {
 		return newOrder;
 	}
 
-	// В сървиса да направя нов гет, който да взима по storeName
 	private orderExists(): Order | false {
 		this.getOrders();
 		console.log(this.allOrders);
@@ -102,6 +101,19 @@ export class AddOrderFormComponent implements OnInit {
 		}
 
 		return invalidURLs;
+	}
+
+	public addOrder(newOrder: Order) {
+		this.orderService.addOrder(newOrder).subscribe(
+			(resposne: Order) => {
+				this.allOrders.push(resposne);
+				this.errorText = "";
+			},
+			(error: HttpErrorResponse) => {
+				console.log("ERROR RESPONSE: ");
+				console.log(error);
+			}
+		);
 	}
 
 	public addNewOrder(): void {
@@ -195,7 +207,7 @@ export class AddOrderFormComponent implements OnInit {
 
 	}
 
-	public clearReolvutField(): void {
+	public clearRevolutField(): void {
 		let element = document.getElementById('revolut-pay');
 		if (element !== null) {
 			element.innerHTML = "";
@@ -212,7 +224,7 @@ export class AddOrderFormComponent implements OnInit {
 		this.revolutService.triggerBackendPayment(revolutDTO).subscribe(
 			(response) => {
 
-				RevolutCheckout(response.public_id, 'sandbox').then(function (instance) {
+				RevolutCheckout(response.public_id, 'sandbox').then((instance) => {
 					let element = document.getElementById('revolut-pay');
 
 					if (element !== null) {
@@ -220,7 +232,7 @@ export class AddOrderFormComponent implements OnInit {
 						instance.revolutPay({
 							target: element,
 							onSuccess() {
-								console.log('Payment completed')
+								console.log('Payment completed');
 							},
 							onError(error) {
 								console.error('Payment failed: ' + error.message)
@@ -239,7 +251,7 @@ export class AddOrderFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.clearReolvutField();
+		this.clearRevolutField();
 		if (!this.orderForm.valid) {
 			return;
 		}
