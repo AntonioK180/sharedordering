@@ -18,7 +18,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AvailableStoresComponent } from './components/available-stores/available-stores.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
@@ -29,22 +28,19 @@ import { SingleOrderComponent } from './components/single-order/single-order.com
 import { HeroLandingComponent } from './components/hero-landing/hero-landing.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
-import { ResponsePopupComponent } from './components/response-popup/response-popup.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		AddOrderFormComponent,
 		NavbarComponent,
-		AvailableStoresComponent,
 		RegistrationFormComponent,
 		LoginFormComponent,
 		ViewOrdersComponent,
 		SingleOrderComponent,
 		HeroLandingComponent,
 		MyProfileComponent,
-		SingleProductComponent,
-		ResponsePopupComponent
+		SingleProductComponent
 	],
 	imports: [
 		BrowserModule,

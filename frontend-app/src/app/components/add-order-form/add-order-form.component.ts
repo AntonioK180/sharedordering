@@ -192,10 +192,10 @@ export class AddOrderFormComponent implements OnInit {
 
 				this.orderService.updateOrder(newOrder).subscribe(
 					(response: Order) => {
-
+						// work with response
 					},
-					(error) => {
-
+					(error: HttpErrorResponse) => {
+						// handle error
 					}
 				);
 			},

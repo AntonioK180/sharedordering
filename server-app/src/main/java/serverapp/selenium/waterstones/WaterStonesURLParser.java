@@ -2,6 +2,7 @@ package serverapp.selenium.waterstones;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import serverapp.models.Product;
@@ -21,7 +22,12 @@ public class WaterStonesURLParser implements StoreURLParser {
 
     private void driverConfig() {
         System.setProperty("webdriver.chrome.driver", chromedriverPath);
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");
+        options.addArguments("--no-sandbox");
+
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         waterstonesHelper = new WaterstonesHelper(driver);
     }

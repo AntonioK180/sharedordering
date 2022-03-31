@@ -2,6 +2,7 @@ package serverapp.selenium.amazon;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import serverapp.models.Product;
 import serverapp.selenium.StoreURLParser;
 import serverapp.selenium.waterstones.WaterstonesHelper;
@@ -18,7 +19,12 @@ public class AmazonURLParser implements StoreURLParser {
 
     private void driverConfig() {
         System.setProperty("webdriver.chrome.driver", chromedriverPath);
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");
+        options.addArguments("--no-sandbox");
+
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         amazonHelper = new AmazonHelper(driver);
     }
@@ -58,8 +64,6 @@ public class AmazonURLParser implements StoreURLParser {
         amazonHelper.signInAccount();
 
         for(Product product : productsList) {
-            System.out.println("Ordering from: " + product.getUrl());
-
             amazonHelper.addToCart(product.getUrl());
         }
 
