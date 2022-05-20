@@ -10,7 +10,6 @@ import serverapp.models.Product;
 import serverapp.DTO.ProductsValidationDTO;
 import serverapp.selenium.StoreURLParser;
 import serverapp.selenium.StoreURLParserBuilder;
-import serverapp.selenium.amazon.AmazonOrder;
 import serverapp.services.OrderService;
 import serverapp.services.ProductService;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/selenium")
 public class SeleniumController {
-    AmazonOrder amazonOrder = new AmazonOrder();
     StoreURLParserBuilder storeURLParserBuilder = new StoreURLParserBuilder();
 
     private final OrderService orderService;

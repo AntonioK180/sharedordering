@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StoreURLParser {
 
-    String chromedriverPath = "drivers/chromedriver.exe";
+    String chromedriverPath = "drivers/chromedriver_101.exe";
     String credentialsFilePath = "src/main/resources/credentials.yaml";
 
     default List<Product> checkLinks(List<Product> productsList) {

@@ -5,24 +5,10 @@ html, body {
 	margin: 0; 
 }
 
-body {
-	background: linear-gradient(60deg, #D16BA5, #86A8E7, #5FFBF1);
-	background-size: 300%;
-	background-attachment: fixed;
-	animation: gradient 6s linear infinite;
-	animation-direction: alternate;
-	background-repeat: no-repeat;
-}
-
-@keyframes gradient {
-	0% { background-position: 0% }
-	100% { background-position: 100% }
-}
-
 ::-webkit-scrollbar {
 	width: 10px;
 }
-  
+
 ::-webkit-scrollbar-track {
 	background: transparent;
 }

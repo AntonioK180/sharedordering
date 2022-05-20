@@ -29,7 +29,11 @@
 
 .cta-copy {
 	color: black;
+	background-color: white;
+	border-radius: 8px;
+	max-width: 90%;
 	position: absolute;
+	left: 5%;
 	font-size: medium;
 	font-weight: bold;
 	bottom: 2em;

@@ -16,11 +16,8 @@ import static serverapp.selenium.StoreURLParser.credentialsFilePath;
 
 public class WaterstonesHelper {
 
-//    @Value("${waterstones.email}")
     private String email_value = "";
-//    @Value("${waterstones.password}")
     private String password_value;
-
 
     private String startUrl = "https://www.waterstones.com/";
     private WebDriver driver;
